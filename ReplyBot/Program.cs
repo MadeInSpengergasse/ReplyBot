@@ -8,6 +8,18 @@ namespace ReplyBot
 {
 	class MainClass
 	{
+		static readonly string[] texts = {
+			"You suck!! #dislike",
+			"I don't like you.",
+			"+1 you are cool!",
+			"EPIC FAIL!!!!",
+			"I kek'd a little.",
+			"I approve of this.",
+			"Do you really mean this?"
+		};
+
+		static readonly string nameToSpam = "stollengrollen";
+
 		public static void Main (string[] args)
 		{
 			//Console.WriteLine ("Hello World!");
@@ -27,13 +39,24 @@ namespace ReplyBot
 
 			//var target = service.ListTweetsOnUserTimeline (new ListTweetsOnUserTimelineOptions());
 			var options = new ListTweetsOnUserTimelineOptions();
-			options.ScreenName="z3ntu";
+			options.ScreenName = nameToSpam;
 			options.IncludeRts = false;
+			options.ExcludeReplies = true;
 			var target = service.ListTweetsOnUserTimeline(options);
 			foreach (var tweet in target)
 			{
-				Console.WriteLine("{0} says '{1}'", tweet.User.ScreenName, tweet.Text);
+				int rand = new Random().Next(0, texts.Length);
+				Console.WriteLine ("============= SENDING TWEET ==============");
+				var sendoptions = new SendTweetOptions ();
+				sendoptions.Status = "@" + tweet.User.ScreenName + " " + texts [rand] + " #ReplyBot (" + DateTime.Now.Ticks + ")";
+				sendoptions.InReplyToStatusId = tweet.Id;
+				var status = service.SendTweet (sendoptions);
+				if (status == null) {
+				Console.WriteLine ("ERROR SENDING TWEET! Possible duplicate!");
+				}
+				//Console.WriteLine("{0} says '{1}' - ID:'{2}'", tweet.User.Name, tweet.Text, tweet.Id);
 			}
+
 		}
 			
 		private static string ConsumerKey
