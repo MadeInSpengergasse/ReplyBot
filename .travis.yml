@@ -6,6 +6,10 @@ mono:
 - weekly
 solution: ReplyBot.sln
 before_script: ./setup_travis.py
+addons:
+  apt:
+    packages:
+    - python3
 env:
   global:
   - secure: f/caKE+o71j2RIiXkpQsSKFHQAxay9m4x79Fh0DZM1pIxQVY/IsDOpt1hEiu2lH4CTMyaNbRGMurdgUEyyqR7spvQLFg+ElRegjwp1ZXeWQqkAKw1C4KUnu3mJ9YR8w5wklCDa+VIsE4aunSS4Hv4HbuJRdLLRxjAa72FxpXA0N/2I4efDWwQCwkrrWCJTr+FZV4lnmXphWpvM9UAy8dUpKMiTpqh+4T9Ws8iPET2el7WBegF5Qw9VK/eD1CBqP3g8mft503gI8X2PuqLwYSPn/NgO0QZIsG/wsYxnfElYI5bLKFsQtj8rfJWo4gjjKUepYfUN/DpR5T/xB92OMYoE069IFXsNbESbSglzkdDBTTAAkSi44ky+T4ZeCCc335N3NiVCon6P2evWc62prIPzYcnIR4stpttjZUXtavOeSdX5O6ZHSjG87sVVW6ElWGKUfMakBMDNtrT3G+SouSIufG8IQ5jk72v5q4CNrOEo2sUqJ+BS/5jqqWlZNqpO9ZmtuAGiLPOKoZg8c/ngMZu9ZlXRlUWN/tMhbmVSC8vTbsFpm5km0EFeVnglxvFdx6YrGFzUSe1pqW6EkTIvAtWcEwUWrBYocVqSsA7LWHpR2KhnKswKSnG2aNzHNOiVTQLck1QkX5Yg3KXH9TMoaNTAdUMSD5Jx8Hz+4+lOZOfF4=
