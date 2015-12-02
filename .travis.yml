@@ -1,0 +1,9 @@
+language: csharp
+
+mono:
+  - latest
+  - alpha
+  - beta
+  - weekly
+
+solution: ReplyBot.sln
