@@ -48,7 +48,7 @@ namespace ReplyBot
 				int rand = new Random().Next(0, texts.Length);
 				Console.WriteLine ("============= SENDING TWEET ==============");
 				var sendoptions = new SendTweetOptions ();
-				sendoptions.Status = "@" + tweet.User.ScreenName + " " + texts [rand] + " #ReplyBot (" + DateTime.Now.Ticks + ")";
+				sendoptions.Status = "@" + tweet.User.ScreenName + " " + texts [rand] + " #ReplyBot (" + DateTime.Now.Ticks + ")"; //DateTime is used in order to prevent identical tweets
 				sendoptions.InReplyToStatusId = tweet.Id;
 				var status = service.SendTweet (sendoptions);
 				if (status == null) {
