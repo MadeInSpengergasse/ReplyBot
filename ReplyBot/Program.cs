@@ -3,11 +3,13 @@ using System.Net;
 using System.IO;
 using System.Configuration;
 using TweetSharp;
+using System.Xml;
 
 namespace ReplyBot
 {
 	class MainClass
 	{
+
 		static readonly string[] texts = {
 			"You suck!! #dislike",
 			"I don't like you.",
@@ -76,5 +78,7 @@ namespace ReplyBot
 			get { return ConfigurationManager.AppSettings["AccessTokenSecret"]; }
 		}
 
+		public string[] loadJson (string filename){
+			StreamReader r = new StreamRead(filename);
 	}
 }
