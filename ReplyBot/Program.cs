@@ -48,7 +48,9 @@ namespace ReplyBot
 			{
 				int rand = new Random().Next(0, texts.Length);
 				Console.WriteLine ("============= SENDING TWEET ==============");
-				TwitterHelper.SendTweet (service, "@" + tweet.User.ScreenName + " " + texts [rand] + " #ReplyBot (" + DateTime.Now.Ticks + ")", tweet.Id);
+				if (!DEBUG) {
+					TwitterHelper.SendTweet (service, "@" + tweet.User.ScreenName + " " + texts [rand] + " #ReplyBot (" + DateTime.Now.Ticks + ")", tweet.Id);
+				}
 				//Console.WriteLine("{0} says '{1}' - ID:'{2}'", tweet.User.Name, tweet.Text, tweet.Id);
 			}
 
