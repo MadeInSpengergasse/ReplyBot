@@ -30,29 +30,7 @@ namespace ReplyBot
 
 		static readonly string nameToSpam = "stollengrollen";
 
-		public static void Main (string[] args)
-		{
-			new ReplyBot ();
-
-		}
 					
-		private static string ConsumerKey
-		{
-			get { return ConfigurationManager.AppSettings["ConsumerKey"]; }
-		}
-		private static string ConsumerSecret
-		{
-			get { return ConfigurationManager.AppSettings["ConsumerSecret"]; }
-		}
-		private static string AccessToken
-		{
-			get { return ConfigurationManager.AppSettings["AccessToken"]; }
-		}
-		private static string AccessTokenSecret
-		{
-			get { return ConfigurationManager.AppSettings["AccessTokenSecret"]; }
-		}
-
 		public ReplyBot(){
 
 			XElement usersxml= userDB.xml;
@@ -108,7 +86,6 @@ namespace ReplyBot
 			//TODO: Add "delete from database" code here
 		}
 
-		static readonly string nameToSpam = "stollengrollen";
 
 		public static void Main (string[] args)
 		{
