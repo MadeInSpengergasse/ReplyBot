@@ -59,12 +59,53 @@ namespace ReplyBot
 			}
 		
 		}
+
+		public void Execute()
+		{
+			//TODO: Add most from constructor here!
+		}
+
+		public void AddToDatabase()
+		{
+			//TODO: Add "add to database" code here
+		}
+
+		public void DeleteFromDatabase()
+		{
+			//TODO: Add "delete from database" code here
+		}
+
 		static readonly string nameToSpam = "stollengrollen";
 
 		public static void Main (string[] args)
 		{
-			new ReplyBot ();
-
+			while (true) {
+				Console.WriteLine ("Welcome to ReplyBot, your very own Twitter bot!");
+				Console.WriteLine ("What would you like to do?");
+				Console.WriteLine ("'E' to execute the bot.");
+				Console.WriteLine ("'A' to add a user to the recipients database.");
+				Console.WriteLine ("'D' to delete a user from the database.");
+				Console.WriteLine ("'E' to exit.");
+				//ReplyBot replybot = new ReplyBot ();
+				switch (Console.ReadKey ().KeyChar) {
+				case 'E':
+				//replybot.Execute();
+					break;
+				case 'A':
+				//replybot.AddToDatabase ();
+					break;
+				case 'D':
+				//replybot.DeleteFromDatabase ();
+					break;
+				case 'E':
+					Console.WriteLine ("Bye!");
+					Environment.Exit (0);
+					break;
+				default:
+					Console.WriteLine ("Key not recognized! Please try again!");
+					break;
+				}
+			}
 		}
 					
 		private static string ConsumerKey
