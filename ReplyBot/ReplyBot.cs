@@ -7,7 +7,7 @@ using System.Xml;
 
 namespace ReplyBot
 {
-	class MainClass
+	class ReplyBot
 	{
 		XMLHelper userDB = new XMLHelper("users.xml");
 		XMLHelper tweetDB = new XMLHelper("tweets.xml");
@@ -26,14 +26,12 @@ namespace ReplyBot
 			"Do you really mean this?"
 		};
 
-		static readonly string nameToSpam = "stollengrollen";
+		public ReplyBot(){
+			
+			XmlElement usersxml= userDB.xml;
+			XmlElement tweetsxml= tweetDB.xml;
 
-		public static void Main (string[] args)
-		{
-			XmlElement users= userDB.xml;
-			XmlElement tweets= tweetDB.xml;
-
-			string[] u= users.
+			//string[] u= users.
 			//Console.WriteLine ("Hello World!");
 			//WebRequest request = WebRequest.Create("http://www.contoso.com/");
 			//WebResponse response = request.GetResponse ();
@@ -59,6 +57,13 @@ namespace ReplyBot
 				}
 				//Console.WriteLine("{0} says '{1}' - ID:'{2}'", tweet.User.Name, tweet.Text, tweet.Id);
 			}
+		
+		}
+		static readonly string nameToSpam = "stollengrollen";
+
+		public static void Main (string[] args)
+		{
+			new ReplyBot ();
 
 		}
 					
