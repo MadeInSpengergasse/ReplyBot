@@ -49,6 +49,7 @@
     <Compile Include="XMLHelper.cs" />
     <Compile Include="TwitterHelper.cs" />
     <Compile Include="ReplyBot.cs" />
+    <Compile Include="User.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

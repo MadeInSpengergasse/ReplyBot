@@ -3,7 +3,9 @@ using System.Net;
 using System.IO;
 using System.Configuration;
 using TweetSharp;
-using System.Xml;
+using System.Collections.Generic;
+using System.Xml.Linq;
+using System.Linq;
 
 namespace ReplyBot
 {
@@ -26,10 +28,41 @@ namespace ReplyBot
 			"Do you really mean this?"
 		};
 
+		static readonly string nameToSpam = "stollengrollen";
+
+		public static void Main (string[] args)
+		{
+			new ReplyBot ();
+
+		}
+					
+		private static string ConsumerKey
+		{
+			get { return ConfigurationManager.AppSettings["ConsumerKey"]; }
+		}
+		private static string ConsumerSecret
+		{
+			get { return ConfigurationManager.AppSettings["ConsumerSecret"]; }
+		}
+		private static string AccessToken
+		{
+			get { return ConfigurationManager.AppSettings["AccessToken"]; }
+		}
+		private static string AccessTokenSecret
+		{
+			get { return ConfigurationManager.AppSettings["AccessTokenSecret"]; }
+		}
+
 		public ReplyBot(){
+
+			XElement usersxml= userDB.xml;
+			XElement tweetsxml= tweetDB.xml;
+
+			List<User> users= new List<User>();
+
+			var y = from x in usersxml.Element("users").Elements("user") select new User() {UserID=x.Element("userid").Value, Type=x.Element("type").Value};
 			
-			XmlElement usersxml= userDB.xml;
-			XmlElement tweetsxml= tweetDB.xml;
+			users.Add (y);
 
 			//string[] u= users.
 			//Console.WriteLine ("Hello World!");
@@ -57,31 +90,8 @@ namespace ReplyBot
 				}
 				//Console.WriteLine("{0} says '{1}' - ID:'{2}'", tweet.User.Name, tweet.Text, tweet.Id);
 			}
-		
-		}
-		static readonly string nameToSpam = "stollengrollen";
 
-		public static void Main (string[] args)
-		{
-			new ReplyBot ();
-
-		}
-					
-		private static string ConsumerKey
-		{
-			get { return ConfigurationManager.AppSettings["ConsumerKey"]; }
-		}
-		private static string ConsumerSecret
-		{
-			get { return ConfigurationManager.AppSettings["ConsumerSecret"]; }
-		}
-		private static string AccessToken
-		{
-			get { return ConfigurationManager.AppSettings["AccessToken"]; }
-		}
-		private static string AccessTokenSecret
-		{
-			get { return ConfigurationManager.AppSettings["AccessTokenSecret"]; }
 		}
 	}
+
 }
