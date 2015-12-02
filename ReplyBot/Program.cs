@@ -12,6 +12,8 @@ namespace ReplyBot
 		XMLHelper userDB = new XMLHelper("users.xml");
 		XMLHelper tweetDB = new XMLHelper("tweets.xml");
 
+
+
 		bool DEBUG = true;
 
 		static readonly string[] texts = {
@@ -28,6 +30,10 @@ namespace ReplyBot
 
 		public static void Main (string[] args)
 		{
+			XmlElement users= userDB.xml;
+			XmlElement tweets= tweetDB.xml;
+
+			string[] u= users.
 			//Console.WriteLine ("Hello World!");
 			//WebRequest request = WebRequest.Create("http://www.contoso.com/");
 			//WebResponse response = request.GetResponse ();
