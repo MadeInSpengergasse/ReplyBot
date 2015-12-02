@@ -9,6 +9,10 @@ namespace ReplyBot
 {
 	class MainClass
 	{
+		XMLHelper userDB = new XMLHelper("users.xml");
+		XMLHelper tweetDB = new XMLHelper("tweets.xml");
+
+		bool DEBUG = true;
 
 		static readonly string[] texts = {
 			"You suck!! #dislike",
@@ -30,37 +34,26 @@ namespace ReplyBot
 			//string text = new StreamReader (response.GetResponseStream ()).ReadToEnd ();
 			//Console.WriteLine (text);
 
-			var service = new TwitterService(ConsumerKey, ConsumerSecret);
+			TwitterService service = new TwitterService(ConsumerKey, ConsumerSecret);
 			service.AuthenticateWith(AccessToken, AccessTokenSecret);
 
-			var tweets = service.ListTweetsOnHomeTimeline(new ListTweetsOnHomeTimelineOptions());
-			foreach (var tweet in tweets)
-			{
-				Console.WriteLine("{0} says '{1}'", tweet.User.ScreenName, tweet.Text);
-			}
+			//var tweets = service.ListTweetsOnHomeTimeline(new ListTweetsOnHomeTimelineOptions());
+			//foreach (var tweet in tweets)
+			//{
+			//	Console.WriteLine("{0} says '{1}'", tweet.User.ScreenName, tweet.Text);
+			//}
 
-			//var target = service.ListTweetsOnUserTimeline (new ListTweetsOnUserTimelineOptions());
-			var options = new ListTweetsOnUserTimelineOptions();
-			options.ScreenName = nameToSpam;
-			options.IncludeRts = false;
-			options.ExcludeReplies = true;
-			var target = service.ListTweetsOnUserTimeline(options);
-			foreach (var tweet in target)
+			var tweets = TwitterHelper.GetUserTimeline(service, nameToSpam, false, true);
+			foreach (var tweet in tweets)
 			{
 				int rand = new Random().Next(0, texts.Length);
 				Console.WriteLine ("============= SENDING TWEET ==============");
-				var sendoptions = new SendTweetOptions ();
-				sendoptions.Status = "@" + tweet.User.ScreenName + " " + texts [rand] + " #ReplyBot (" + DateTime.Now.Ticks + ")"; //DateTime is used in order to prevent identical tweets
-				sendoptions.InReplyToStatusId = tweet.Id;
-				var status = service.SendTweet (sendoptions);
-				if (status == null) {
-				Console.WriteLine ("ERROR SENDING TWEET! Possible duplicate!");
-				}
+				TwitterHelper.SendTweet (service, "@" + tweet.User.ScreenName + " " + texts [rand] + " #ReplyBot (" + DateTime.Now.Ticks + ")", tweet.Id);
 				//Console.WriteLine("{0} says '{1}' - ID:'{2}'", tweet.User.Name, tweet.Text, tweet.Id);
 			}
 
 		}
-			
+					
 		private static string ConsumerKey
 		{
 			get { return ConfigurationManager.AppSettings["ConsumerKey"]; }
@@ -77,8 +70,5 @@ namespace ReplyBot
 		{
 			get { return ConfigurationManager.AppSettings["AccessTokenSecret"]; }
 		}
-
-		public string[] loadJson (string filename){
-			StreamReader r = new StreamRead(filename);
 	}
 }
