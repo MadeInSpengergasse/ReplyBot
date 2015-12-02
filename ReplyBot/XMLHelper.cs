@@ -13,12 +13,15 @@ namespace ReplyBot
 		{
 			xml = Load (path);
 			this.path = path;
-			Console.WriteLine (xml);
+			//Console.WriteLine (xml);
 		}
 
 		public XElement Load(string path)
 		{
-			return XElement.Load (path);
+			if(File.Exists(path))
+				return XElement.Load (path);
+			//TODO: Implement option when file does not exist.
+			return null;
 		}
 
 		public void Save(string path=null)

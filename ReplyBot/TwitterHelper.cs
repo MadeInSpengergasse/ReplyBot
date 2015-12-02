@@ -6,7 +6,7 @@ namespace ReplyBot
 {
 	public class TwitterHelper
 	{
-		public static bool SendTweet(TwitterService service, string status, int inReplyToStatusId)
+		public static bool SendTweet(TwitterService service, string status, long inReplyToStatusId)
 		{
 			var sendoptions = new SendTweetOptions ();
 			sendoptions.Status = status;
