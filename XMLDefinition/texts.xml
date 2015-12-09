@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <texts>
-	<category name="hate">
+	<category id="1" description="hate">
 		<text>You suck!! #dislike</text>
 	</category>
-	<category name="neutral">
+	<category id="2" description="neutral">
 		<text>I R8 8/8 M8</text>
 	</category>
-	<category name="nice">
+	<category id="3" description="nice">
 		<text>"+1 you are cool!"</text>
 	</category>
 </texts>

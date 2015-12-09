@@ -7,33 +7,30 @@ namespace ReplyBot
 	public class XMLHelper
 	{
 		public XElement xml {get;set;}
-		private string path;
+		private string filename;
 
-		public XMLHelper (string path, string resname)
+		public XMLHelper (string filename, string resname)
 		{
-			xml = Load (path, resname);
-			this.path = path;
+			xml = Load (filename, resname);
+			this.filename = filename;
 			//Console.WriteLine (xml);
 		}
 
-		public XElement Load(string path, string resname)
+		public XElement Load(string filename, string resname)
 		{
-			if (File.Exists (path))
-				return XElement.Load (path);
+			if (File.Exists (filename))
+				return XElement.Load (filename);
 			else {
-				String dflt = new StreamReader (System.Reflection.Assembly.GetExecutingAssembly ().GetManifestResourceStream (resname)).ReadToEnd ();
-				Console.WriteLine (dflt);
+				return XElement.Load (System.Reflection.Assembly.GetExecutingAssembly ().GetManifestResourceStream (resname));
 			}
-			//TODO: Implement option when file does not exist.
-			return null;
 		}
 
-		public void Save(string path=null)
+		public void Save(string filename=null)
 		{
-			if (path == null) {
-				xml.Save (this.path);
+			if (filename == null) {
+				xml.Save (this.filename);
 			}
-			xml.Save (path);
+			xml.Save (filename);
 		}
 	}
 }

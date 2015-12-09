@@ -27,6 +27,13 @@ namespace ReplyBot
 			options.ExcludeReplies = excludeReplies;
 			return service.ListTweetsOnUserTimeline(options);
 		}
+
+		public static TwitterUser GetUserIdFromUsername(TwitterService service, string screenname)
+		{
+			//SearchForUserOptions options = new SearchForUserOptions ();
+
+			//return service.SearchForUser (options);
+		}
 	}
 }
 

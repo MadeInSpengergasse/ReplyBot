@@ -72,6 +72,10 @@ namespace ReplyBot
 		public void AddToDatabase ()
 		{
 			//TODO: Add "add to database" code here
+			Console.WriteLine("Please enter the @handle of the user you want to add.");
+			string username = Console.ReadLine ();
+			TwitterUser user = TwitterHelper.GetUserIdFromUsername (service, username);
+			Console.WriteLine (user);
 		}
 
 		public void DeleteFromDatabase ()
