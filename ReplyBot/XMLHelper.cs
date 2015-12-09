@@ -7,30 +7,38 @@ namespace ReplyBot
 	public class XMLHelper
 	{
 		public XElement xml {get;set;}
-		private string filename;
+		private string path;
+		private string datapath;
+		private string resname;
 
 		public XMLHelper (string filename, string resname)
 		{
-			xml = Load (filename, resname);
-			this.filename = filename;
-			//Console.WriteLine (xml);
+			this.resname = resname;
+
+			this.datapath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/.replybot"; // home directory (~) + special hidden directory
+			Directory.CreateDirectory (datapath);
+			this.path = datapath+filename;
+			this.xml = Load ();
 		}
 
-		public XElement Load(string filename, string resname)
+		public XElement Load()
 		{
-			if (File.Exists (filename))
-				return XElement.Load (filename);
-			else {
-				return XElement.Load (System.Reflection.Assembly.GetExecutingAssembly ().GetManifestResourceStream (resname));
+			if (File.Exists (datapath)) {
+				return XElement.Load (datapath);
+			} else {
+				XElement xml = XElement.Load (System.Reflection.Assembly.GetExecutingAssembly ().GetManifestResourceStream (resname));
+				Save (xml);
+				return xml;
 			}
 		}
 
-		public void Save(string filename=null)
+		public void Save(XElement customxml=null)
 		{
-			if (filename == null) {
-				xml.Save (this.filename);
+			if (customxml != null) {
+				customxml.Save (this.path);
+			} else {
+				xml.Save (this.path);
 			}
-			xml.Save (filename);
 		}
 	}
 }

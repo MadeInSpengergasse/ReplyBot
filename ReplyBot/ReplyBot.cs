@@ -77,11 +77,13 @@ namespace ReplyBot
 			string username = Console.ReadLine ();
 			TwitterUser user = TwitterHelper.GetUserIdFromUsername (service, username);
 			Console.WriteLine (user);
+			Console.WriteLine ("Not implemented yet.");
 		}
 
 		public void DeleteFromDatabase ()
 		{
 			//TODO: Add "delete from database" code here
+			Console.WriteLine ("Not implemented yet.");
 		}
 
 
@@ -95,7 +97,10 @@ namespace ReplyBot
 				Console.WriteLine ("'D' to delete a user from the database.");
 				Console.WriteLine ("'Q' to quit.");
 				ReplyBot replybot = new ReplyBot ();
-				switch (Char.ToUpper (Console.ReadKey ().KeyChar)) {
+
+				char pressedkey = Char.ToUpper (Console.ReadKey ().KeyChar);
+				Console.WriteLine ("");
+				switch (pressedkey) {
 				case 'E':
 					replybot.Execute ();
 					break;
@@ -106,11 +111,11 @@ namespace ReplyBot
 					replybot.DeleteFromDatabase ();
 					break;
 				case 'Q':
-					Console.WriteLine ("\nBye!");
+					Console.WriteLine ("Bye!");
 					Environment.Exit (0);
 					break;
 				default:
-					Console.WriteLine ("\nKey not recognized! Please try again!");
+					Console.WriteLine ("Key not recognized! Please try again!");
 					break;
 				}
 				Console.WriteLine ("\n");
