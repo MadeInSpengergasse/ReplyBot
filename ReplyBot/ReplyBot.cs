@@ -13,6 +13,7 @@ namespace ReplyBot
 	{
 		XMLHelper userDB = new XMLHelper ("users.xml");
 		XMLHelper tweetDB = new XMLHelper ("tweets.xml");
+		XMLHelper textsDB = new XMLHelper ("texts.xml", "default_texts");
 
 		TwitterService service;
 
@@ -30,7 +31,6 @@ namespace ReplyBot
 
 		static readonly string nameToSpam = "stollengrollen";
 
-					
 		public ReplyBot ()
 		{
 			service = new TwitterService (ConsumerKey, ConsumerSecret);
@@ -40,13 +40,21 @@ namespace ReplyBot
 		public void Execute ()
 		{
 			List<User> users = new List<User> ();
+			List<string> answeredTweets = new List<string> ();
 
 			var y = from x in userDB.xml.Elements ("user")
 			        select new User () { UserId = Convert.ToInt64 (x.Element ("userid").Value), Type = Convert.ToByte (x.Element ("type").Value) };
-			
+
 			foreach (User u in y) {
 				users.Add (u);
 			}
+
+			y = from x in tweetDB.xml.Elements("tweetid")
+				select new {tweetId =x.Element("tweetid").Value};
+
+			foreach ( 
+			
+		
 
 			var tweets = TwitterHelper.GetUserTimeline (service, nameToSpam, false, true);
 			foreach (var tweet in tweets) {
