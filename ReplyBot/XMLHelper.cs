@@ -18,9 +18,12 @@ namespace ReplyBot
 
 		public XElement Load(string path, string resname)
 		{
-			if(File.Exists(path))
+			if (File.Exists (path))
 				return XElement.Load (path);
-			System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream(resname);
+			else {
+				String dflt = new StreamReader (System.Reflection.Assembly.GetExecutingAssembly ().GetManifestResourceStream (resname)).ReadToEnd ();
+				Console.WriteLine (dflt);
+			}
 			//TODO: Implement option when file does not exist.
 			return null;
 		}
