@@ -48,11 +48,12 @@ namespace ReplyBot
 			}
 
 			var z = from x in tweetDB.xml.Elements("tweetid")
-				select new String(x.Element("tweetid").Value.ToCharArray());
+				select x.Element("tweetid").Value;
 
 			foreach (String s in z){
-				answeredTweets.Add (s.ToString ());
+				answeredTweets.Add (s);
 			}
+			Console.WriteLine (answeredTweets.FirstOrDefault());
 			
 		
 
