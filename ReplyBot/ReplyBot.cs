@@ -54,7 +54,8 @@ namespace ReplyBot
 				answeredTweets.Add (s);
 			}
 			Console.WriteLine (answeredTweets.FirstOrDefault());
-			
+
+
 		
 
 			var tweets = TwitterHelper.GetUserTimeline (service, nameToSpam, false, true);
