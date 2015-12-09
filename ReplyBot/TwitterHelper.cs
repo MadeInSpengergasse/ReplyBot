@@ -33,6 +33,7 @@ namespace ReplyBot
 			//SearchForUserOptions options = new SearchForUserOptions ();
 
 			//return service.SearchForUser (options);
+			return null;
 		}
 	}
 }
