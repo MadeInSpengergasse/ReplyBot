@@ -9,17 +9,18 @@ namespace ReplyBot
 		public XElement xml {get;set;}
 		private string path;
 
-		public XMLHelper (string path)
+		public XMLHelper (string path, string resname)
 		{
-			xml = Load (path);
+			xml = Load (path, resname);
 			this.path = path;
 			//Console.WriteLine (xml);
 		}
 
-		public XElement Load(string path)
+		public XElement Load(string path, string resname)
 		{
 			if(File.Exists(path))
 				return XElement.Load (path);
+			System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream(resname);
 			//TODO: Implement option when file does not exist.
 			return null;
 		}
