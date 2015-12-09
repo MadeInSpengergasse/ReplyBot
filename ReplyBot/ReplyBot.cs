@@ -25,9 +25,9 @@ namespace ReplyBot
 			"I kek'd a little.",
 			"I approve of this.",
 			"Do you really mean this?"
-		};
+		}; //TODO: Read texts from textsDB
 
-		static readonly string nameToSpam = "stollengrollen";
+		static readonly string nameToSpam = "stollengrollen"; //TODO: Read users from userDB
 
 		public ReplyBot ()
 		{
@@ -40,6 +40,7 @@ namespace ReplyBot
 			List<User> users = new List<User> ();
 			List<string> answeredTweets = new List<string> ();
 
+			//TODO: Better variable names
 			var y = from x in userDB.xml.Elements ("user")
 			        select new User () { UserId = Convert.ToInt64 (x.Element ("userid").Value), Type = Convert.ToByte (x.Element ("type").Value) };
 
@@ -54,9 +55,6 @@ namespace ReplyBot
 				answeredTweets.Add (s);
 			}
 			Console.WriteLine (answeredTweets.FirstOrDefault());
-
-
-		
 
 			var tweets = TwitterHelper.GetUserTimeline (service, nameToSpam, false, true);
 			foreach (var tweet in tweets) {
@@ -74,7 +72,7 @@ namespace ReplyBot
 		public void AddToDatabase ()
 		{
 			//TODO: Add "add to database" code here
-			Console.WriteLine("Please enter the @handle of the user you want to add.");
+			Console.WriteLine("Please enter the @handle of the user you want to add without the @.");
 			string username = Console.ReadLine ();
 			TwitterUser user = TwitterHelper.GetUserIdFromUsername (service, username);
 			Console.WriteLine (user);
