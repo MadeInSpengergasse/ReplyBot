@@ -11,13 +11,11 @@ namespace ReplyBot
 {
 	class ReplyBot
 	{
-		XMLHelper userDB = new XMLHelper ("users.xml");
-		XMLHelper tweetDB = new XMLHelper ("tweets.xml");
+		XMLHelper userDB = new XMLHelper ("users.xml", "default_users");
+		XMLHelper tweetDB = new XMLHelper ("tweets.xml", "default_tweets");
 		XMLHelper textsDB = new XMLHelper ("texts.xml", "default_texts");
 
 		TwitterService service;
-
-		bool DEBUG = true;
 
 		static readonly string[] texts = {
 			"You suck!! #dislike",
@@ -34,7 +32,7 @@ namespace ReplyBot
 		public ReplyBot ()
 		{
 			service = new TwitterService (ConsumerKey, ConsumerSecret);
-			service.AuthenticateWith (AccessToken, AccessTokenSecret);	
+			service.AuthenticateWith (AccessToken, AccessTokenSecret);
 		}
 
 		public void Execute ()
@@ -59,7 +57,7 @@ namespace ReplyBot
 			var tweets = TwitterHelper.GetUserTimeline (service, nameToSpam, false, true);
 			foreach (var tweet in tweets) {
 				int rand = new Random ().Next (0, texts.Length);
-				if (!DEBUG) {
+				if (!Debug) {
 					Console.WriteLine ("Sending tweet");
 					TwitterHelper.SendTweet (service, "@" + tweet.User.ScreenName + " " + texts [rand] + " #ReplyBot (" + DateTime.Now.Ticks + ")", tweet.Id);
 				} else {
@@ -126,7 +124,10 @@ namespace ReplyBot
 
 		private static string AccessTokenSecret {
 			get { return ConfigurationManager.AppSettings ["AccessTokenSecret"]; }
+		}
 
+		private static bool Debug {
+			get { return bool.Parse(ConfigurationManager.AppSettings ["Debug"]); }
 		}
 
 		//string[] u= users.

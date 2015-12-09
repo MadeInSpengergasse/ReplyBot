@@ -56,4 +56,15 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="xmldefault\texts.xml">
+      <LogicalName>default_texts</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="xmldefault\tweets.xml">
+      <LogicalName>default_tweets</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="xmldefault\users.xml">
+      <LogicalName>default_users</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
 </Project>
