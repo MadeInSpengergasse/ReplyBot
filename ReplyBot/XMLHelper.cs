@@ -17,17 +17,18 @@ namespace ReplyBot
 
 			this.datapath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/.replybot"; // home directory (~) + special hidden directory
 			Directory.CreateDirectory (datapath);
-			this.path = datapath+filename;
+			this.path = datapath+"/"+filename;
 			this.xml = Load ();
 		}
 
 		public XElement Load()
 		{
-			if (File.Exists (datapath)) {
-				return XElement.Load (datapath);
+			if (File.Exists (path)) {
+				return XElement.Load (path);
 			} else {
 				XElement xml = XElement.Load (System.Reflection.Assembly.GetExecutingAssembly ().GetManifestResourceStream (resname));
 				Save (xml);
+				Console.WriteLine("XML file doesnt exist!");
 				return xml;
 			}
 		}
@@ -35,7 +36,8 @@ namespace ReplyBot
 		public void Save(XElement customxml=null)
 		{
 			if (customxml != null) {
-				customxml.Save (this.path);
+				customxml.Save (path);
+				Console.WriteLine ("aa");
 			} else {
 				xml.Save (this.path);
 			}

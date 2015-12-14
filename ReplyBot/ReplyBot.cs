@@ -39,23 +39,26 @@ namespace ReplyBot
 		{
 			List<User> users = new List<User> ();
 			List<string> answeredTweets = new List<string> ();
+			List<string> hateTexts = GetTexts(1);
+			List<string> neutralTexts = GetTexts(2);
+			List<string> niceTexts = GetTexts(3);
 
-			//TODO: Better variable names
-			var y = from x in userDB.xml.Elements ("user")
+			var getUsers = from x in userDB.xml.Elements ("user")
 			        select new User () { UserId = Convert.ToInt64 (x.Element ("userid").Value), Type = Convert.ToByte (x.Element ("type").Value) };
 
-			foreach (User u in y) {
+			foreach (User u in getUsers) {
 				users.Add (u);
 			}
 
-			var z = from x in tweetDB.xml.Elements("tweetid")
-				select x.Element("tweetid").Value;
+			var getTweets = from x in tweetDB.xml.Elements("tweetid")
+				select x.Value;
 
-			foreach (String s in z){
+			foreach (String s in getTweets){
 				answeredTweets.Add (s);
 			}
-			Console.WriteLine (answeredTweets.FirstOrDefault());
 
+
+				
 			var tweets = TwitterHelper.GetUserTimeline (service, nameToSpam, false, true);
 			foreach (var tweet in tweets) {
 				int rand = new Random ().Next (0, texts.Length);
@@ -64,6 +67,9 @@ namespace ReplyBot
 					TwitterHelper.SendTweet (service, "@" + tweet.User.ScreenName + " " + texts [rand] + " #ReplyBot (" + DateTime.Now.Ticks + ")", tweet.Id);
 				} else {
 					Console.WriteLine ("Not sending tweet because in debug mode.");
+					Console.WriteLine (answeredTweets.FirstOrDefault().ToString());
+					Console.WriteLine (users.FirstOrDefault ().UserId);
+					Console.WriteLine (hateTexts.FirstOrDefault().ToString ());
 				}
 				//Console.WriteLine("{0} says '{1}' - ID:'{2}'", tweet.User.Name, tweet.Text, tweet.Id);
 			}
@@ -141,6 +147,17 @@ namespace ReplyBot
 			get { return bool.Parse(ConfigurationManager.AppSettings ["Debug"]); }
 		}
 
+		public List<string> GetTexts (int category){
+			List<string> texts= new List<string>();
+			var getTexts = from x in textsDB.xml.Elements("category")
+					where Convert.ToInt32(x.Attribute("id").Value) ==category
+				select x.Element ("text").Value;
+
+			foreach (String s in getTexts) {
+				texts.Add (s);
+			}
+			return texts;
+		}
 		//string[] u= users.
 		//Console.WriteLine ("Hello World!");
 		//WebRequest request = WebRequest.Create("http://www.contoso.com/");

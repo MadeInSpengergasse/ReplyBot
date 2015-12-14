@@ -31,10 +31,11 @@ namespace ReplyBot
 		public static TwitterUser GetUserIdFromUsername(TwitterService service, string screenname)
 		{
 			//SearchForUserOptions options = new SearchForUserOptions ();
-
+			GetUserProfileForOptions options = new GetUserProfileForOptions();
+			options.ScreenName = screenname;
+			return service.GetUserProfileFor(options);
 			//return service.SearchForUser (options);
-			return null;
-		}
+	}
 	}
 }
 
