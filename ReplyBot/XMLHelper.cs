@@ -1,15 +1,23 @@
 ﻿using System;
 using System.IO;
 using System.Xml.Linq;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace ReplyBot
 {
 	public class XMLHelper
 	{
+
 		public XElement xml {get;set;}
 		private string path;
 		private string datapath;
 		private string resname;
+
+		List<string> answeredTweets;
+		List<string> hateTexts;
+		List<string> neutralTexts;
+		List<string> niceTexts;
 
 		public XMLHelper (string filename, string resname)
 		{
@@ -28,7 +36,7 @@ namespace ReplyBot
 			} else {
 				XElement xml = XElement.Load (System.Reflection.Assembly.GetExecutingAssembly ().GetManifestResourceStream (resname));
 				Save (xml);
-				Console.WriteLine("XML file doesnt exist!");
+				Console.WriteLine("XML file doesnt exist, using the default! This message should not appear on a second start.");
 				return xml;
 			}
 		}
@@ -37,11 +45,12 @@ namespace ReplyBot
 		{
 			if (customxml != null) {
 				customxml.Save (path);
-				Console.WriteLine ("aa");
 			} else {
 				xml.Save (this.path);
 			}
 		}
 	}
+
+
 }
 

@@ -4,29 +4,33 @@ namespace ReplyBot
 {
 	public class User
 	{
-		long userid;
-		byte type;
-
-		public User ()
+		public User()
 		{
-			userid = 12233;
-			type = 0;
+			UserId = 0;
+			Type = 0;
+			Name = "NoName";
 		}
 
-		public User (long userid, byte type)
+		public User (long userid, byte type, string name)
 		{
 			UserId = userid;
 			Type = type;
+			Name = name;
 		}
 
 		public long UserId {
-			get { return userid; }
-			set { this.userid = value; }
+			get;
+			set;
 		}
 
 		public byte Type {
-			get { return type; }
-			set { this.type = value; }
+			get;
+			set;
+		}
+
+		public string Name {
+			get;
+			set;
 		}
 	}
 }

@@ -3,6 +3,7 @@
 	<user>
 		<userid>2449500796</userid>
 		<type>1</type>
+		<name>YourName</name>
 		<!-- 0=RANDOM, 1=HATE, 2=NEUTRAL, 3=NICE, expandable -->
 	</user>
 </users>

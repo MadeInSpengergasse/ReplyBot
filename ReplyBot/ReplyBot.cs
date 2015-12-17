@@ -11,9 +11,9 @@ namespace ReplyBot
 {
 	class ReplyBot
 	{
-		XMLHelper userDB = new XMLHelper ("users.xml", "default_users");
-		XMLHelper tweetDB = new XMLHelper ("tweets.xml", "default_tweets");
-		XMLHelper textsDB = new XMLHelper ("texts.xml", "default_texts");
+		UserList userList = new UserList(new XMLHelper ("users.xml", "default_users"));
+		TweetList tweetList = new TweetList(new XMLHelper ("tweets.xml", "default_tweets"));
+		TextLists textLists = new TextLists(new XMLHelper ("texts.xml", "default_texts"));
 
 		TwitterService service;
 
@@ -37,28 +37,6 @@ namespace ReplyBot
 
 		public void Execute ()
 		{
-			List<User> users = new List<User> ();
-			List<string> answeredTweets = new List<string> ();
-			List<string> hateTexts = GetTexts(1);
-			List<string> neutralTexts = GetTexts(2);
-			List<string> niceTexts = GetTexts(3);
-
-			var getUsers = from x in userDB.xml.Elements ("user")
-			        select new User () { UserId = Convert.ToInt64 (x.Element ("userid").Value), Type = Convert.ToByte (x.Element ("type").Value) };
-
-			foreach (User u in getUsers) {
-				users.Add (u);
-			}
-
-			var getTweets = from x in tweetDB.xml.Elements("tweetid")
-				select x.Value;
-
-			foreach (String s in getTweets){
-				answeredTweets.Add (s);
-			}
-
-
-				
 			var tweets = TwitterHelper.GetUserTimeline (service, nameToSpam, false, true);
 			foreach (var tweet in tweets) {
 				int rand = new Random ().Next (0, texts.Length);
@@ -67,9 +45,9 @@ namespace ReplyBot
 					TwitterHelper.SendTweet (service, "@" + tweet.User.ScreenName + " " + texts [rand] + " #ReplyBot (" + DateTime.Now.Ticks + ")", tweet.Id);
 				} else {
 					Console.WriteLine ("Not sending tweet because in debug mode.");
-					Console.WriteLine (answeredTweets.FirstOrDefault().ToString());
-					Console.WriteLine (users.FirstOrDefault ().UserId);
-					Console.WriteLine (hateTexts.FirstOrDefault().ToString ());
+					Console.WriteLine (tweetList.List.FirstOrDefault().ToString());
+					Console.WriteLine (userList.List.FirstOrDefault ().UserId);
+					Console.WriteLine (textLists.Hate.FirstOrDefault().ToString ());
 				}
 				//Console.WriteLine("{0} says '{1}' - ID:'{2}'", tweet.User.Name, tweet.Text, tweet.Id);
 			}
@@ -78,11 +56,47 @@ namespace ReplyBot
 		public void AddToDatabase ()
 		{
 			//TODO: Add "add to database" code here
-			Console.WriteLine("Please enter the @handle of the user you want to add without the @.");
+			Console.WriteLine("Please enter the handle of the user you want to add.");
+			Console.Write ("@");
 			string username = Console.ReadLine ();
 			TwitterUser user = TwitterHelper.GetUserIdFromUsername (service, username);
-			Console.WriteLine (user);
-			Console.WriteLine ("Not implemented yet.");
+			if (user == null) {
+				Console.WriteLine ("Unknown user! Please retry!");
+				return;
+			}
+			Console.WriteLine ("What type of messages do you want to send to this user?");
+			Console.WriteLine ("'0' for random messages.");
+			Console.WriteLine ("'1' for hate messages.");
+			Console.WriteLine ("'2' for neutral messages.");
+			Console.WriteLine ("'3' for nice messages.");
+			Console.Write ("> ");
+
+			char pressedkey = Char.ToUpper (Console.ReadKey ().KeyChar);
+			byte mode;
+			if (Byte.TryParse (pressedkey.ToString(), out mode) == false) {
+				Console.WriteLine ("Not a number, please try again!");
+				return;
+			}
+			Console.WriteLine ("");
+			List<byte> validModes = new List<byte>{ 0, 1, 2, 3 };
+			if (validModes.IndexOf (mode) == -1) {
+				Console.WriteLine ("Unknown mode, please try again!");
+				return;
+			}
+			userList.List.Add(new User(user.Id, mode, user.ScreenName));
+			Console.WriteLine ("Added user '" + user.ScreenName + "' with ID '" + user.Id + "' to the database!");
+		}
+
+		public void ViewDatabase()
+		{
+			Console.WriteLine ("Users in Database:");
+			if (userList.List.Count == 0) {
+				Console.WriteLine ("Database is empty. Try adding a user first!");
+				return;
+			}
+			foreach (User user in userList.List) {
+				Console.WriteLine("'" + user.Name + "' with ID '" + user.UserId + "'");
+			}
 		}
 
 		public void DeleteFromDatabase ()
@@ -94,14 +108,16 @@ namespace ReplyBot
 
 		public static void Main (string[] args)
 		{
+			ReplyBot replybot = new ReplyBot ();
 			while (true) {
 				Console.WriteLine ("Welcome to ReplyBot, your very own Twitter bot!");
 				Console.WriteLine ("What would you like to do?");
 				Console.WriteLine ("'E' to execute the bot.");
 				Console.WriteLine ("'A' to add a user to the recipients database.");
+				Console.WriteLine ("'V' to view all users in the database.");
 				Console.WriteLine ("'D' to delete a user from the database.");
 				Console.WriteLine ("'Q' to quit.");
-				ReplyBot replybot = new ReplyBot ();
+				Console.Write ("> ");
 
 				char pressedkey = Char.ToUpper (Console.ReadKey ().KeyChar);
 				Console.WriteLine ("");
@@ -111,6 +127,9 @@ namespace ReplyBot
 					break;
 				case 'A':
 					replybot.AddToDatabase ();
+					break;
+				case 'V':
+					replybot.ViewDatabase ();
 					break;
 				case 'D':
 					replybot.DeleteFromDatabase ();
@@ -147,17 +166,6 @@ namespace ReplyBot
 			get { return bool.Parse(ConfigurationManager.AppSettings ["Debug"]); }
 		}
 
-		public List<string> GetTexts (int category){
-			List<string> texts= new List<string>();
-			var getTexts = from x in textsDB.xml.Elements("category")
-					where Convert.ToInt32(x.Attribute("id").Value) ==category
-				select x.Element ("text").Value;
-
-			foreach (String s in getTexts) {
-				texts.Add (s);
-			}
-			return texts;
-		}
 		//string[] u= users.
 		//Console.WriteLine ("Hello World!");
 		//WebRequest request = WebRequest.Create("http://www.contoso.com/");
