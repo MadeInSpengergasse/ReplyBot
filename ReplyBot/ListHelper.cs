@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Xml.Linq;
 using System.Collections.Generic;
 
 namespace ReplyBot
@@ -32,7 +33,17 @@ namespace ReplyBot
 
 		public override void Save()
 		{
-			//TODO: Implement
+			XElement new_xml = new XElement ("users");
+			foreach (User user in List) {
+				var userxml = new XElement ("user",
+					new XElement ("userid", user.UserId),
+					new XElement("type", user.Type),
+					new XElement("name", user.Name)
+				);
+				new_xml.Add (userxml);
+			}
+			xmlhelper.xml = new_xml;
+			xmlhelper.Save ();
 		}
 	}
 
@@ -54,7 +65,12 @@ namespace ReplyBot
 
 		public override void Save()
 		{
-			//TODO: Implement
+			XElement new_xml = new XElement ("tweets");
+			foreach (string tweet in List) {
+				new_xml.Add (new XElement ("tweetid", tweet));
+			}
+			xmlhelper.xml = new_xml;
+			xmlhelper.Save ();
 		}
 	}
 
@@ -73,7 +89,42 @@ namespace ReplyBot
 
 		public override void Save()
 		{
-			//TODO: Implement
+			XElement new_xml = new XElement ("texts");
+
+			//TODO: Make dynamic, for no copy-pasta
+			// HATE LIST
+			var hatexml = new XElement("category",
+				new XAttribute("id", "1"),
+				new XAttribute("description", "hate")
+			);
+			foreach (string text in Hate) {
+				hatexml.Add (new XElement ("text", text));
+			}
+			new_xml.Add (hatexml);
+
+			// NEUTRAL LIST
+			var neutralxml = new XElement("category",
+				new XAttribute("id", "2"),
+				new XAttribute("description", "neutral")
+			);
+			foreach (string text in Neutral) {
+				neutralxml.Add (new XElement ("text", text));
+			}
+			new_xml.Add (neutralxml);
+
+			// NICE LIST
+			var nicexml = new XElement("category",
+				new XAttribute("id", "3"),
+				new XAttribute("description", "nice")
+			);
+			foreach (string text in Nice) {
+				hatexml.Add (new XElement ("text", text));
+			}
+			new_xml.Add (nicexml);
+
+			// GENERAL
+			xmlhelper.xml = new_xml;
+			xmlhelper.Save ();
 		}
 
 		public List<string> GetTexts (TextCategory category){
@@ -89,8 +140,17 @@ namespace ReplyBot
 		}
 
 		public string getRandomString(TextCategory category) {
-			//TODO: Implement
-			return "Random string, not implemented";
+			switch (category) {
+			case TextCategory.hate:
+				return Hate [new Random ().Next (0, Hate.Count)];
+			case TextCategory.neutral:
+				return Neutral [new Random ().Next (0, Neutral.Count)];
+			case TextCategory.nice:
+				return Nice [new Random ().Next (0, Nice.Count)];
+			case TextCategory.random:
+				return getRandomString ((TextCategory)new Random ().Next (0, 4));
+			}
+			return "Internal error.";
 		}
 
 		public enum TextCategory : int {random=0, hate=1, neutral=2, nice=3};

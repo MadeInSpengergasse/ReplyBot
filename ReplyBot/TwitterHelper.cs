@@ -19,10 +19,10 @@ namespace ReplyBot
 			return true;
 		}
 
-		public static IEnumerable<TwitterStatus> GetUserTimeline(TwitterService service, string screenname, bool includeRts, bool excludeReplies)
+		public static IEnumerable<TwitterStatus> GetUserTimeline(TwitterService service, long userId, bool includeRts, bool excludeReplies)
 		{
 			ListTweetsOnUserTimelineOptions options = new ListTweetsOnUserTimelineOptions();
-			options.ScreenName = screenname;
+			options.UserId = userId;
 			options.IncludeRts = includeRts;
 			options.ExcludeReplies = excludeReplies;
 			return service.ListTweetsOnUserTimeline(options);

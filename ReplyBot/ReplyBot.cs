@@ -16,19 +16,7 @@ namespace ReplyBot
 		TextLists textLists = new TextLists(new XMLHelper ("texts.xml", "default_texts"));
 
 		TwitterService service;
-
-		static readonly string[] texts = {
-			"You suck!! #dislike",
-			"I don't like you.",
-			"+1 you are cool!",
-			"EPIC FAIL!!!!",
-			"I kek'd a little.",
-			"I approve of this.",
-			"Do you really mean this?"
-		}; //TODO: Read texts from textsDB
-
-		static readonly string nameToSpam = "stollengrollen"; //TODO: Read users from userDB
-
+			
 		public ReplyBot ()
 		{
 			service = new TwitterService (ConsumerKey, ConsumerSecret);
@@ -37,20 +25,28 @@ namespace ReplyBot
 
 		public void Execute ()
 		{
-			var tweets = TwitterHelper.GetUserTimeline (service, nameToSpam, false, true);
-			foreach (var tweet in tweets) {
-				int rand = new Random ().Next (0, texts.Length);
-				if (!Debug) {
-					Console.WriteLine ("Sending tweet");
-					TwitterHelper.SendTweet (service, "@" + tweet.User.ScreenName + " " + texts [rand] + " #ReplyBot (" + DateTime.Now.Ticks + ")", tweet.Id);
-				} else {
-					Console.WriteLine ("Not sending tweet because in debug mode.");
-					Console.WriteLine (tweetList.List.FirstOrDefault().ToString());
-					Console.WriteLine (userList.List.FirstOrDefault ().UserId);
-					Console.WriteLine (textLists.Hate.FirstOrDefault().ToString ());
+			foreach(var user in userList.List)
+			{
+				Console.WriteLine (user.UserId + " - " + user.Name);
+				var tweets = TwitterHelper.GetUserTimeline (service, user.UserId, false, true);
+				foreach (var tweet in tweets) {
+					Console.WriteLine (textLists.getRandomString (TextLists.TextCategory.random));
+					if (!tweetList.List.Contains (tweet.Id.ToString())) {
+						string tweetText = "@" + tweet.User.ScreenName + " " + textLists.getRandomString (TextLists.TextCategory.random) + " #ReplyBot (" + DateTime.Now.Ticks + ")";
+						if (!Debug) {
+							Console.WriteLine ("Sending tweet...");
+							TwitterHelper.SendTweet (service, tweetText, tweet.Id);
+							tweetList.List.Add (tweet.Id.ToString());
+						} else {
+							Console.WriteLine ("Not sending tweet because in debug mode.");
+							Console.WriteLine (tweetText);
+						}
+					} else {
+						Console.WriteLine ("Tweet already sent.");
+					}
 				}
-				//Console.WriteLine("{0} says '{1}' - ID:'{2}'", tweet.User.Name, tweet.Text, tweet.Id);
 			}
+			tweetList.Save ();
 		}
 
 		public void AddToDatabase ()
@@ -85,6 +81,7 @@ namespace ReplyBot
 			}
 			userList.List.Add(new User(user.Id, mode, user.ScreenName));
 			Console.WriteLine ("Added user '" + user.ScreenName + "' with ID '" + user.Id + "' to the database!");
+			userList.Save ();
 		}
 
 		public void ViewDatabase()
@@ -109,6 +106,7 @@ namespace ReplyBot
 		public static void Main (string[] args)
 		{
 			ReplyBot replybot = new ReplyBot ();
+			//TODO: Add/move administration option and text add option
 			while (true) {
 				Console.WriteLine ("Welcome to ReplyBot, your very own Twitter bot!");
 				Console.WriteLine ("What would you like to do?");

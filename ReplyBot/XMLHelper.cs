@@ -14,11 +14,6 @@ namespace ReplyBot
 		private string datapath;
 		private string resname;
 
-		List<string> answeredTweets;
-		List<string> hateTexts;
-		List<string> neutralTexts;
-		List<string> niceTexts;
-
 		public XMLHelper (string filename, string resname)
 		{
 			this.resname = resname;
