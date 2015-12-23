@@ -49,7 +49,7 @@ namespace ReplyBot
 			tweetList.Save ();
 		}
 
-		public void AddToDatabase ()
+		public void AddUserToDatabase ()
 		{
 			//TODO: Add "add to database" code here
 			Console.WriteLine("Please enter the handle of the user you want to add.");
@@ -84,7 +84,7 @@ namespace ReplyBot
 			userList.Save ();
 		}
 
-		public void ViewDatabase()
+		public void ViewUserDatabase()
 		{
 			Console.WriteLine ("Users in Database:");
 			if (userList.List.Count == 0) {
@@ -96,9 +96,71 @@ namespace ReplyBot
 			}
 		}
 
-		public void DeleteFromDatabase ()
+		public void DeleteUserFromDatabase ()
 		{
 			//TODO: Add "delete from database" code here
+			Console.WriteLine ("Not implemented yet.");
+		}
+
+		public void AddTextToDatabase()
+		{
+			Console.WriteLine ("Please enter your text now.");
+			string text = Console.ReadLine ();
+
+			Console.WriteLine (
+				"Please choose the category:" + "\n" +
+				"'1' for a hate message." + "\n" +
+				"'2' for a neutral message." + "\n" +
+				"'3' for a nice message."
+			);
+			char pressedkey = Char.ToUpper (Console.ReadKey ().KeyChar);
+			byte mode;
+			if (Byte.TryParse (pressedkey.ToString(), out mode) == false) {
+				Console.WriteLine ("Not a number, please try again!");
+				return;
+			}
+			switch (mode) {
+			case 1:
+				textLists.Hate.Add (text);
+				break;
+			case 2:
+				textLists.Neutral.Add (text);
+				break;
+			case 3:
+				textLists.Nice.Add (text);
+				break;
+			default:
+				Console.WriteLine ("Unknown mode, please try again.");
+				return;
+			}
+			Console.WriteLine ("Text added.");
+			textLists.Save ();
+		}
+
+		public void ViewTextDatabase()
+		{
+			Console.WriteLine ("Texts in Database:");
+			if (textLists.Hate.Count == 0 || textLists.Neutral.Count == 0 || textLists.Nice.Count == 0) {
+				Console.WriteLine ("Database is empty. Try adding a text first!");
+				return;
+			}
+			Console.WriteLine ("\nCategory HATE:");
+			foreach (string text in textLists.Hate) {
+				Console.WriteLine("'" + text + "'");
+			}
+			Console.WriteLine ("\nCategory NEUTRAL:");
+			foreach (string text in textLists.Neutral) {
+				Console.WriteLine("'" + text + "'");
+			}
+			Console.WriteLine ("\nCategory NICE:");
+			foreach (string text in textLists.Nice) {
+				Console.WriteLine("'" + text + "'");
+			}
+		}
+
+		public void DeleteTextFromDatabase()
+		{
+			//TODO: Implement
 			Console.WriteLine ("Not implemented yet.");
 		}
 
@@ -107,14 +169,27 @@ namespace ReplyBot
 		{
 			ReplyBot replybot = new ReplyBot ();
 			//TODO: Add/move administration option and text add option
+			/*
+			 * E execute
+			 * A administration
+			 * 	- u User
+			 *    - a Add
+			 *    - d Delete
+			 *    - v View
+			 *  - t Texts
+			 *    - a Add
+			 *    - d Delete
+			 *    - v View
+			 *  Q quit
+			 */
 			while (true) {
-				Console.WriteLine ("Welcome to ReplyBot, your very own Twitter bot!");
-				Console.WriteLine ("What would you like to do?");
-				Console.WriteLine ("'E' to execute the bot.");
-				Console.WriteLine ("'A' to add a user to the recipients database.");
-				Console.WriteLine ("'V' to view all users in the database.");
-				Console.WriteLine ("'D' to delete a user from the database.");
-				Console.WriteLine ("'Q' to quit.");
+				Console.WriteLine (
+					"Welcome to ReplyBot, your very own Twitter bot!" + "\n" +
+					"What would you like to do?" + "\n" +
+					"'E' to execute the bot." + "\n" +
+					"'A' to administrate." + "\n" +
+					"'Q' to quit."
+				);
 				Console.Write ("> ");
 
 				char pressedkey = Char.ToUpper (Console.ReadKey ().KeyChar);
@@ -124,18 +199,110 @@ namespace ReplyBot
 					replybot.Execute ();
 					break;
 				case 'A':
-					replybot.AddToDatabase ();
-					break;
-				case 'V':
-					replybot.ViewDatabase ();
-					break;
-				case 'D':
-					replybot.DeleteFromDatabase ();
+					AdministrationDialog (replybot);
 					break;
 				case 'Q':
 					Console.WriteLine ("Bye!");
 					Environment.Exit (0);
 					break;
+				default:
+					Console.WriteLine ("Key not recognized! Please try again!");
+					break;
+				}
+				Console.WriteLine ("\n");
+			}
+		}
+
+		public static void AdministrationDialog(ReplyBot replybot) {
+			while (true) {
+				Console.WriteLine (
+					"-- ADMINISTRATION --" + "\n" +
+					"'U' for user administration." + "\n" +
+					"'T' for text administration." + "\n" +
+					"'B' to get back to the main menu."
+				);
+				Console.Write ("> ");
+
+				char pressedkey = Char.ToUpper (Console.ReadKey ().KeyChar);
+				Console.WriteLine ("");
+				switch (pressedkey) {
+				case 'U':
+					AdministrationUserDialog (replybot);
+					break;
+				case 'T':
+					AdministrationTextDialog (replybot);
+					break;
+				case 'B':
+					return;
+				default:
+					Console.WriteLine ("Key not recognized! Please try again!");
+					break;
+				}
+				Console.WriteLine ("\n");
+			}
+		}
+
+		public static void AdministrationUserDialog(ReplyBot replybot) {
+			while (true) {
+				Console.WriteLine (
+					"--- USER ADMINISTRATION ---" + "\n" +
+					"What would you like to do?" + "\n" +
+					"'A' to add a user to the recipients database." + "\n" +
+					"'V' to view all users in the database." + "\n" +
+					"'D' to delete a user from the database." + "\n" +
+					"'B' to go back to the main administration menu."
+				);
+				Console.Write ("> ");
+
+				char pressedkey = Char.ToUpper (Console.ReadKey ().KeyChar);
+				Console.WriteLine ("");
+				switch (pressedkey) {
+				case 'A':
+					replybot.AddUserToDatabase ();
+					break;
+				case 'V':
+					replybot.ViewUserDatabase ();
+					break;
+				case 'D':
+					replybot.DeleteUserFromDatabase ();
+					break;
+				case 'B':
+					return;
+				default:
+					Console.WriteLine ("Key not recognized! Please try again!");
+					break;
+				}
+				Console.WriteLine ("\n");
+			}
+		}
+
+		public static void AdministrationTextDialog(ReplyBot replybot) {
+			Console.WriteLine ("Not implemented.");
+			while (true) {
+				Console.WriteLine (
+					"--- TEXT ADMINISTRATION ---" + "\n" +
+					"What would you like to do?" + "\n" +
+					"'A' to add a text to the database." + "\n" +
+					"'V' to view all texts in the database." + "\n" +
+					"'D' to delete a text from the database." + "\n" +
+					"'B' to go back to the main administration menu."
+				);
+				Console.Write ("> ");
+
+				char pressedkey = Char.ToUpper (Console.ReadKey ().KeyChar);
+				Console.WriteLine ("");
+				switch (pressedkey) {
+				case 'A':
+					replybot.AddTextToDatabase ();
+					break;
+				case 'V':
+					replybot.ViewTextDatabase ();
+					break;
+				case 'D':
+					replybot.DeleteTextFromDatabase ();
+					break;
+				case 'B':
+					return;
 				default:
 					Console.WriteLine ("Key not recognized! Please try again!");
 					break;

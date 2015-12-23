@@ -118,7 +118,7 @@ namespace ReplyBot
 				new XAttribute("description", "nice")
 			);
 			foreach (string text in Nice) {
-				hatexml.Add (new XElement ("text", text));
+				nicexml.Add (new XElement ("text", text));
 			}
 			new_xml.Add (nicexml);
 
@@ -130,9 +130,9 @@ namespace ReplyBot
 		public List<string> GetTexts (TextCategory category){
 			List<string> texts= new List<string>();
 			var getTexts = from x in xmlhelper.xml.Elements("category")
-					where Convert.ToInt32(x.Attribute("id").Value) == (int)category
+					where x.Attribute("id").Value == ((int)category).ToString()
 				select x.Element ("text").Value;
-
+			//TODO: Only 1 text per category?!
 			foreach (String s in getTexts) {
 				texts.Add (s);
 			}
@@ -156,4 +156,3 @@ namespace ReplyBot
 		public enum TextCategory : int {random=0, hate=1, neutral=2, nice=3};
 	}
 }
-
