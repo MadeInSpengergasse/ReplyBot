@@ -51,7 +51,7 @@ namespace ReplyBot
 
 		public void AddUserToDatabase ()
 		{
-			//TODO: Add "add to database" code here
+			
 			Console.WriteLine("Please enter the handle of the user you want to add.");
 			Console.Write ("@");
 			string username = Console.ReadLine ();
@@ -161,6 +161,28 @@ namespace ReplyBot
 		public void DeleteTextFromDatabase()
 		{
 			//TODO: Implement
+			Console.WriteLine ("Please choose a category from which you want to delete a text");
+
+			Console.WriteLine (
+								"'1' for hate messages." + "\n" +
+				"'2' for neutral messages." + "\n" +
+				"'3' for nice messages."
+			);
+			char pressedkey = Char.ToUpper (Console.ReadKey ().KeyChar);
+			byte mode;
+			if (Byte.TryParse (pressedkey.ToString(), out mode) == false) {
+				Console.WriteLine ("Not a number, please try again!");
+				return;
+			}
+			switch (mode) {
+			case 1: 
+				break;
+			case 2:
+				break;
+			case 3:
+				break;
+			}
+
 			Console.WriteLine ("Not implemented yet.");
 		}
 

@@ -131,8 +131,10 @@ namespace ReplyBot
 			List<string> texts= new List<string>();
 			var getTexts = from x in xmlhelper.xml.Elements("category")
 					where x.Attribute("id").Value == ((int)category).ToString()
-				select x.Element ("text").Value;
-			//TODO: Only 1 text per category?!
+				select  x.Element ("text").Value;
+
+			getTexts.ToArray ();
+
 			foreach (String s in getTexts) {
 				texts.Add (s);
 			}
