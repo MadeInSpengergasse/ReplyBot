@@ -99,7 +99,19 @@ namespace ReplyBot
 		public void DeleteUserFromDatabase ()
 		{
 			//TODO: Add "delete from database" code here
-			Console.WriteLine ("Not implemented yet.");
+			Console.WriteLine ("Please enter the handle of the user you want to delete.");
+			Console.Write ("@");
+			string wantedname = Console.ReadLine ();
+			long wantedId = TwitterHelper.GetUserIdFromUsername (service, wantedname).Id;
+			foreach(User user in userList.List) {
+				if (user.Name == wantedname || user.UserId == wantedId) {
+					userList.List.Remove (user);
+					Console.WriteLine ("User removed.");
+					userList.Save ();
+					return;
+				}
+			}
+			Console.WriteLine ("No user called " + wantedname + " was found.");
 		}
 
 		public void AddTextToDatabase()
@@ -168,7 +180,6 @@ namespace ReplyBot
 		public static void Main (string[] args)
 		{
 			ReplyBot replybot = new ReplyBot ();
-			//TODO: Add/move administration option and text add option
 			/*
 			 * E execute
 			 * A administration

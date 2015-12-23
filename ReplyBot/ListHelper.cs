@@ -91,40 +91,27 @@ namespace ReplyBot
 		{
 			XElement new_xml = new XElement ("texts");
 
-			//TODO: Make dynamic, for no copy-pasta
 			// HATE LIST
-			var hatexml = new XElement("category",
-				new XAttribute("id", "1"),
-				new XAttribute("description", "hate")
-			);
-			foreach (string text in Hate) {
-				hatexml.Add (new XElement ("text", text));
-			}
-			new_xml.Add (hatexml);
-
+			new_xml.Add (GetXmlFromListForCategories("1", "hate", Hate));
 			// NEUTRAL LIST
-			var neutralxml = new XElement("category",
-				new XAttribute("id", "2"),
-				new XAttribute("description", "neutral")
-			);
-			foreach (string text in Neutral) {
-				neutralxml.Add (new XElement ("text", text));
-			}
-			new_xml.Add (neutralxml);
-
+			new_xml.Add (GetXmlFromListForCategories("2", "neutral", Neutral));
 			// NICE LIST
-			var nicexml = new XElement("category",
-				new XAttribute("id", "3"),
-				new XAttribute("description", "nice")
-			);
-			foreach (string text in Nice) {
-				nicexml.Add (new XElement ("text", text));
-			}
-			new_xml.Add (nicexml);
+			new_xml.Add (GetXmlFromListForCategories("3", "nice", Nice));
 
 			// GENERAL
 			xmlhelper.xml = new_xml;
 			xmlhelper.Save ();
+		}
+
+		public void GetXmlFromListForCategories(string categoryId, string categoryDescription, List<string> listToGetTextsFrom) {
+			var newxml = new XElement("category",
+				new XAttribute("id", categoryId),
+				new XAttribute("description", categoryDescription)
+			);
+			foreach (string text in listToGetTextsFrom) {
+				newxml.Add (new XElement ("text", text));
+			}
+			return newxml;
 		}
 
 		public List<string> GetTexts (TextCategory category){
