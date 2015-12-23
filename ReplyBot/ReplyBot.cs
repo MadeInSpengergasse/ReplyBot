@@ -98,7 +98,6 @@ namespace ReplyBot
 
 		public void DeleteUserFromDatabase ()
 		{
-			//TODO: Add "delete from database" code here
 			Console.WriteLine ("Please enter the handle of the user you want to delete.");
 			Console.Write ("@");
 			string wantedname = Console.ReadLine ();

@@ -103,7 +103,7 @@ namespace ReplyBot
 			xmlhelper.Save ();
 		}
 
-		public void GetXmlFromListForCategories(string categoryId, string categoryDescription, List<string> listToGetTextsFrom) {
+		public XElement GetXmlFromListForCategories(string categoryId, string categoryDescription, List<string> listToGetTextsFrom) {
 			var newxml = new XElement("category",
 				new XAttribute("id", categoryId),
 				new XAttribute("description", categoryDescription)
