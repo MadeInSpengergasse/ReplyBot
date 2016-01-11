@@ -24,7 +24,7 @@ namespace ReplyBot
 			List = new List<User> ();
 
 			var getUsers = from x in xmlhelper.xml.Elements ("user")
-				select new User () { UserId = Convert.ToInt64 (x.Element ("userid").Value), Type = Convert.ToByte (x.Element ("type").Value), Name = x.Element("name").Value };
+				select new User () { UserId = Convert.ToInt64 (x.Element ("userid").Value), Category = Convert.ToByte (x.Element ("category").Value), Name = x.Element("name").Value };
 
 			foreach (User u in getUsers) {
 				List.Add (u);
@@ -37,7 +37,7 @@ namespace ReplyBot
 			foreach (User user in List) {
 				var userxml = new XElement ("user",
 					new XElement ("userid", user.UserId),
-					new XElement("type", user.Type),
+					new XElement("category", user.Category),
 					new XElement("name", user.Name)
 				);
 				new_xml.Add (userxml);

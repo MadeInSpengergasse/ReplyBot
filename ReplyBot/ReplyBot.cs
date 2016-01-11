@@ -28,7 +28,7 @@ namespace ReplyBot
 		{
 			if (textLists.Hate.Count == 0 || textLists.Neutral.Count == 0 || textLists.Nice.Count == 0) {
 				Console.WriteLine ("WARNING!!!! One of the text lists are empty. The program may not work correctly.");
-				Thread.Sleep (1000);
+				Thread.Sleep (2000);
 			}
 			if (userList.List.Count == 0) {
 				Console.WriteLine ("No user in database! Please add one first!");
@@ -39,6 +39,7 @@ namespace ReplyBot
 				var tweets = TwitterHelper.GetUserTimeline (service, user.UserId, false, true);
 				foreach (var tweet in tweets) {
 					if (!tweetList.List.Contains (tweet.Id.ToString())) {
+						
 						//TODO: Add category from user
 						string tweetText = "@" + tweet.User.ScreenName + " " + textLists.getRandomString (TextLists.TextCategory.random) + " #ReplyBot (" + DateTime.Now.Ticks + ")";
 						if (!Debug) {

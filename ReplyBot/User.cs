@@ -7,14 +7,14 @@ namespace ReplyBot
 		public User()
 		{
 			UserId = 0;
-			Type = 0;
+			Category = 0;
 			Name = "NoName";
 		}
 
-		public User (long userid, byte type, string name)
+		public User (long userid, byte category, string name)
 		{
 			UserId = userid;
-			Type = type;
+			Category = category;
 			Name = name;
 		}
 
@@ -23,7 +23,7 @@ namespace ReplyBot
 			set;
 		}
 
-		public byte Type {
+		public byte Category {
 			get;
 			set;
 		}
