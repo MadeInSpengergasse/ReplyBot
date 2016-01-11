@@ -183,11 +183,15 @@ namespace ReplyBot
 			Console.WriteLine (
 				"'1' for hate messages." + "\n" +
 				"'2' for neutral messages." + "\n" +
-				"'3' for nice messages."
+				"'3' for nice messages." + "\n" +
+				"'B' to go back."
 			);
 			char pressedkey = Char.ToUpper (Console.ReadKey ().KeyChar);
 			byte mode;
 			if (Byte.TryParse (pressedkey.ToString(), out mode) == false) {
+				if (pressedkey == 'B') {
+					return;
+				}
 				Console.WriteLine ("Not a number, please try again!");
 				return;
 			}
