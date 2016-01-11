@@ -151,7 +151,7 @@ namespace ReplyBot
 		public void ViewTextDatabase()
 		{
 			Console.WriteLine ("Texts in Database:");
-			if (textLists.Hate.Count == 0 || textLists.Neutral.Count == 0 || textLists.Nice.Count == 0) {
+			if (textLists.Hate.Count == 0 && textLists.Neutral.Count == 0 && textLists.Nice.Count == 0) {
 				Console.WriteLine ("Database is empty. Try adding a text first!");
 				return;
 			}
@@ -171,7 +171,6 @@ namespace ReplyBot
 
 		public void DeleteTextFromDatabase()
 		{
-			//TODO: Implement
 			Console.WriteLine ("Please choose a category from which you want to delete a text");
 
 			Console.WriteLine (
@@ -188,22 +187,36 @@ namespace ReplyBot
 			Console.WriteLine ("\n");
 			switch (mode) {
 			case 1:
-				var listEnumerator = textLists.Hate.GetEnumerator ();
-				for (var i = 0; listEnumerator.MoveNext() == true; i++)
-				{
-					string currentItem = listEnumerator.Current; // Get current item.
-					Console.WriteLine("[{0}] - {1}", i, currentItem); // Do as you wish with i and  currentItem
-				}
+				SubDeleteTexts (textLists.Hate);
 				break;
 			case 2:
+				SubDeleteTexts (textLists.Neutral);
 				break;
 			case 3:
+				SubDeleteTexts (textLists.Nice);
 				break;
 			}
-
-			Console.WriteLine ("Not implemented yet.");
+			textLists.Save ();
 		}
 
+		public void SubDeleteTexts(List<string> List) {
+			var listEnumerator = List.GetEnumerator ();
+			Console.WriteLine ("================");
+			for (var i = 0; listEnumerator.MoveNext() == true; i++)
+			{
+				string currentItem = listEnumerator.Current; // Get current item.
+				Console.WriteLine("[{0}] - {1}", i, currentItem); // Do as you wish with i and  currentItem
+			}
+			Console.WriteLine ("================");
+			Console.WriteLine ("Please type the number of the text you want to delete.");
+			int number;
+			if (!int.TryParse (Console.ReadLine (), out number)) {
+				Console.WriteLine ("Error!");
+				return;
+			}
+			Console.WriteLine ("Removed the text '" + List [number] + "'");
+			List.RemoveAt (number);
+		}
 
 		public static void Main (string[] args)
 		{
