@@ -175,7 +175,7 @@ namespace ReplyBot
 			Console.WriteLine ("Please choose a category from which you want to delete a text");
 
 			Console.WriteLine (
-								"'1' for hate messages." + "\n" +
+				"'1' for hate messages." + "\n" +
 				"'2' for neutral messages." + "\n" +
 				"'3' for nice messages."
 			);
@@ -185,8 +185,15 @@ namespace ReplyBot
 				Console.WriteLine ("Not a number, please try again!");
 				return;
 			}
+			Console.WriteLine ("\n");
 			switch (mode) {
-			case 1: 
+			case 1:
+				var listEnumerator = textLists.Hate.GetEnumerator ();
+				for (var i = 0; listEnumerator.MoveNext() == true; i++)
+				{
+					string currentItem = listEnumerator.Current; // Get current item.
+					Console.WriteLine("[{0}] - {1}", i, currentItem); // Do as you wish with i and  currentItem
+				}
 				break;
 			case 2:
 				break;
