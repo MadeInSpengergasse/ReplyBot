@@ -6,6 +6,7 @@ using TweetSharp;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using System.Linq;
+using System.Threading;
 
 namespace ReplyBot
 {
@@ -25,13 +26,20 @@ namespace ReplyBot
 
 		public void Execute ()
 		{
+			if (textLists.Hate.Count == 0 || textLists.Neutral.Count == 0 || textLists.Nice.Count == 0) {
+				Console.WriteLine ("WARNING!!!! One of the text lists are empty. The program may not work correctly.");
+				Thread.Sleep (1000);
+			}
+			if (userList.List.Count == 0) {
+				Console.WriteLine ("No user in database! Please add one first!");
+			}
 			foreach(var user in userList.List)
 			{
 				Console.WriteLine (user.UserId + " - " + user.Name);
 				var tweets = TwitterHelper.GetUserTimeline (service, user.UserId, false, true);
 				foreach (var tweet in tweets) {
-					Console.WriteLine (textLists.getRandomString (TextLists.TextCategory.random));
 					if (!tweetList.List.Contains (tweet.Id.ToString())) {
+						//TODO: Add category from user
 						string tweetText = "@" + tweet.User.ScreenName + " " + textLists.getRandomString (TextLists.TextCategory.random) + " #ReplyBot (" + DateTime.Now.Ticks + ")";
 						if (!Debug) {
 							Console.WriteLine ("Sending tweet...");
@@ -268,7 +276,7 @@ namespace ReplyBot
 		public static void AdministrationDialog(ReplyBot replybot) {
 			while (true) {
 				Console.WriteLine (
-					"-- ADMINISTRATION --" + "\n" +
+					"--- ADMINISTRATION ---" + "\n" +
 					"'U' for user administration." + "\n" +
 					"'T' for text administration." + "\n" +
 					"'B' to get back to the main menu."
@@ -329,7 +337,6 @@ namespace ReplyBot
 		}
 
 		public static void AdministrationTextDialog(ReplyBot replybot) {
-			Console.WriteLine ("Not implemented.");
 			while (true) {
 				Console.WriteLine (
 					"--- TEXT ADMINISTRATION ---" + "\n" +
