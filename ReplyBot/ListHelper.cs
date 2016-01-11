@@ -128,6 +128,7 @@ namespace ReplyBot
 		}
 
 		public string getRandomString(TextCategory category) {
+			try {
 			switch (category) {
 
 			case TextCategory.hate:
@@ -139,7 +140,12 @@ namespace ReplyBot
 			case TextCategory.random:
 				return getRandomString ((TextCategory)new Random ().Next (0, 4));
 			}
-			
+			}
+
+			catch (ArgumentOutOfRangeException e){
+				Console.WriteLine("A needed Textcategory is empty, the programm may not behave properly");
+
+			}
 			return "Internal error.";
 		}
 

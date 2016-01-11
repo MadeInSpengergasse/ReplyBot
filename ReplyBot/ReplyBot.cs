@@ -27,7 +27,7 @@ namespace ReplyBot
 		public void Execute ()
 		{
 			if (textLists.Hate.Count == 0 || textLists.Neutral.Count == 0 || textLists.Nice.Count == 0) {
-				Console.WriteLine ("WARNING!!!! One of the text lists are empty. The program may not work correctly.");
+				Console.WriteLine ("WARNING!!!! One or more of the text lists are empty. The program may not work correctly.");
 				Thread.Sleep (2000);
 			}
 			if (userList.List.Count == 0) {
