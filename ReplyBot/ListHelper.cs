@@ -129,6 +129,7 @@ namespace ReplyBot
 
 		public string getRandomString(TextCategory category) {
 			switch (category) {
+
 			case TextCategory.hate:
 				return Hate [new Random ().Next (0, Hate.Count)];
 			case TextCategory.neutral:
@@ -138,6 +139,7 @@ namespace ReplyBot
 			case TextCategory.random:
 				return getRandomString ((TextCategory)new Random ().Next (0, 4));
 			}
+			
 			return "Internal error.";
 		}
 
