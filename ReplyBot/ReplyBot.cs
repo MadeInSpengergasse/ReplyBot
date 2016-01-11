@@ -39,9 +39,7 @@ namespace ReplyBot
 				var tweets = TwitterHelper.GetUserTimeline (service, user.UserId, false, true);
 				foreach (var tweet in tweets) {
 					if (!tweetList.List.Contains (tweet.Id.ToString())) {
-						
-						//TODO: Add category from user
-						string tweetText = "@" + tweet.User.ScreenName + " " + textLists.getRandomString (TextLists.TextCategory.random) + " #ReplyBot (" + DateTime.Now.Ticks + ")";
+						string tweetText = "@" + tweet.User.ScreenName + " " + textLists.getRandomString (user.Category) + " #ReplyBot (" + DateTime.Now.Ticks + ")";
 						if (!Debug) {
 							Console.WriteLine ("Sending tweet...");
 							TwitterHelper.SendTweet (service, tweetText, tweet.Id);
@@ -88,7 +86,7 @@ namespace ReplyBot
 				Console.WriteLine ("Unknown mode, please try again!");
 				return;
 			}
-			userList.List.Add(new User(user.Id, mode, user.ScreenName));
+			userList.List.Add(new User(user.Id, (TextLists.TextCategory)mode, user.ScreenName));
 			Console.WriteLine ("Added user '" + user.ScreenName + "' with ID '" + user.Id + "' to the database!");
 			userList.Save ();
 		}
@@ -101,7 +99,7 @@ namespace ReplyBot
 				return;
 			}
 			foreach (User user in userList.List) {
-				Console.WriteLine("'" + user.Name + "' with ID '" + user.UserId + "'");
+				Console.WriteLine("'" + user.Name + "' with ID '" + user.UserId + "' with category '" + user.Category + "'");
 			}
 		}
 

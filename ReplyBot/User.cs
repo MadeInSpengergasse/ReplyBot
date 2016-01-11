@@ -4,14 +4,7 @@ namespace ReplyBot
 {
 	public class User
 	{
-		public User()
-		{
-			UserId = 0;
-			Category = 0;
-			Name = "NoName";
-		}
-
-		public User (long userid, byte category, string name)
+		public User (long userid, TextLists.TextCategory category, string name)
 		{
 			UserId = userid;
 			Category = category;
@@ -23,7 +16,7 @@ namespace ReplyBot
 			set;
 		}
 
-		public byte Category {
+		public TextLists.TextCategory Category {
 			get;
 			set;
 		}
