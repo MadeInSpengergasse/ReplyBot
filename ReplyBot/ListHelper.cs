@@ -115,15 +115,14 @@ namespace ReplyBot
 		}
 
 		public List<string> GetTexts (TextCategory category){
-			//FIXME: No exception when list is empty
-			//FIXME: Only one text gets read
+			
 			List<string> texts= new List<string>();
 			var getTexts = from x in xmlhelper.xml.Elements("category")
 					where x.Attribute("id").Value == ((int)category).ToString()
-				select  x.Element ("text").Value;
+				select  x.Elements("text").ToArray();
 
-			foreach (String s in getTexts) {
-				texts.Add (s);
+			foreach (XElement s in getTexts.First()) {
+				texts.Add (s.Value);
 			}
 			return texts;
 		}
