@@ -115,7 +115,6 @@ namespace ReplyBot
 		}
 
 		public List<string> GetTexts (TextCategory category){
-			
 			List<string> texts= new List<string>();
 			var getTexts = from x in xmlhelper.xml.Elements("category")
 					where x.Attribute("id").Value == ((int)category).ToString()
@@ -129,22 +128,18 @@ namespace ReplyBot
 
 		public string getRandomString(TextCategory category) {
 			try {
-			switch (category) {
-
-			case TextCategory.hate:
-				return Hate [new Random ().Next (0, Hate.Count)];
-			case TextCategory.neutral:
-				return Neutral [new Random ().Next (0, Neutral.Count)];
-			case TextCategory.nice:
-				return Nice [new Random ().Next (0, Nice.Count)];
-			case TextCategory.random:
-				return getRandomString ((TextCategory)new Random ().Next (0, 4));
-			}
-			}
-
-			catch (ArgumentOutOfRangeException e){
+				switch (category) {
+				case TextCategory.hate:
+					return Hate [new Random ().Next (0, Hate.Count)];
+				case TextCategory.neutral:
+					return Neutral [new Random ().Next (0, Neutral.Count)];
+				case TextCategory.nice:
+					return Nice [new Random ().Next (0, Nice.Count)];
+				case TextCategory.random:
+					return getRandomString ((TextCategory)new Random ().Next (0, 4));
+				}
+			} catch (ArgumentOutOfRangeException e) {
 				Console.WriteLine("A needed Textcategory is empty, the programm may not behave properly");
-
 			}
 			return "Internal error.";
 		}
