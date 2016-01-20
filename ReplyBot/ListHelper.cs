@@ -80,11 +80,14 @@ namespace ReplyBot
 		public List<string> Neutral { get; set;}
 		public List<string> Nice { get; set; }
 
+		private Random random;
+
 		public TextLists(XMLHelper xmlhelper) : base(xmlhelper)
 		{
 			Hate = GetTexts (TextCategory.hate);
 			Neutral = GetTexts (TextCategory.neutral);
 			Nice = GetTexts (TextCategory.nice);
+			random = new Random ();
 		}
 
 		public override void Save()
@@ -130,15 +133,15 @@ namespace ReplyBot
 			try {
 				switch (category) {
 				case TextCategory.hate:
-					return Hate [new Random ().Next (0, Hate.Count)];
+					return Hate [random.Next (0, Hate.Count)];
 				case TextCategory.neutral:
-					return Neutral [new Random ().Next (0, Neutral.Count)];
+					return Neutral [random.Next (0, Neutral.Count)];
 				case TextCategory.nice:
-					return Nice [new Random ().Next (0, Nice.Count)];
+					return Nice [random.Next (0, Nice.Count)];
 				case TextCategory.random:
-					return getRandomString ((TextCategory)new Random ().Next (0, 4));
+					return getRandomString ((TextCategory)random.Next (1, 4));
 				}
-			} catch (ArgumentOutOfRangeException e) {
+			} catch (ArgumentOutOfRangeException) {
 				Console.WriteLine("A needed Textcategory is empty, the programm may not behave properly");
 			}
 			return "Internal error.";
