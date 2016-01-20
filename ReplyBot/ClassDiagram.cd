@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ReplyBot.ListHelper" Collapsed="true">
+    <Position X="5.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ListHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ReplyBot.UserList">
+    <Position X="5.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>ListHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ReplyBot.TweetList">
+    <Position X="2.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>ListHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ReplyBot.TextLists">
+    <Position X="7.75" Y="3" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="ReplyBot.TextLists.TextCategory" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ListHelper.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAIAABBIAAAAAAAAAAAAAAQAAJAAAAAQAAAAAAAA=</HashCode>
+      <FileName>ListHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ReplyBot.ReplyBot">
+    <Position X="1" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAIAAAAAIQAAAAAAwEEEAACQAQAAEIAJQAIgAI=</HashCode>
+      <FileName>ReplyBot.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ReplyBot.TwitterHelper">
+    <Position X="3" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAgAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TwitterHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ReplyBot.User">
+    <Position X="10.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>User.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ReplyBot.XMLHelper">
+    <Position X="10.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgIAAAAgAAAAAAAACAAAAAAAAAAAAAQAAgAAAAAA=</HashCode>
+      <FileName>XMLHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
