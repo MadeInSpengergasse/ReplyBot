@@ -18,7 +18,7 @@ namespace ReplyBot
 			}
 			return true;
 		}
-
+		// retrieves all post of the user
 		public static IEnumerable<TwitterStatus> GetUserTimeline(TwitterService service, long userId, bool includeRts, bool excludeReplies)
 		{
 			ListTweetsOnUserTimelineOptions options = new ListTweetsOnUserTimelineOptions();

@@ -12,6 +12,7 @@ namespace ReplyBot
 {
 	class ReplyBot
 	{
+		//reading in the lists for users, tweets and texts
 		UserList userList = new UserList(new XMLHelper ("users.xml", "default_users"));
 		TweetList tweetList = new TweetList(new XMLHelper ("tweets.xml", "default_tweets"));
 		TextLists textLists = new TextLists(new XMLHelper ("texts.xml", "default_texts"));
@@ -20,6 +21,7 @@ namespace ReplyBot
 			
 		public ReplyBot ()
 		{
+			//connect to Twitter with login credentials
 			service = new TwitterService (ConsumerKey, ConsumerSecret);
 			service.AuthenticateWith (AccessToken, AccessTokenSecret);
 		}
@@ -40,6 +42,8 @@ namespace ReplyBot
 			 *    - v View
 			 *  Q quit
 			 */
+
+			//starting dialogue
 			while (true) {
 				Console.WriteLine (
 					" ____            _       ____        _   \n|  _ \\ ___ _ __ | |_   _| __ )  ___ | |_ \n| |_) / _ \\ '_ \\| | | | |  _ \\ / _ \\| __|\n|  _ <  __/ |_) | | |_| | |_) | (_) | |_ \n|_| \\_\\___| .__/|_|\\__, |____/ \\___/ \\__|\n          |_|      |___/                 \n" +
@@ -351,6 +355,7 @@ namespace ReplyBot
 			textLists.Save ();
 		}
 
+		//sub-menu for deleting a text
 		public void SubDeleteTexts(List<string> List) {
 			var listEnumerator = List.GetEnumerator ();
 			Console.WriteLine ("================");
