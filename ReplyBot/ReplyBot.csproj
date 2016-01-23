@@ -43,6 +43,9 @@
     <Reference Include="TweetSharp">
       <HintPath>..\packages\TweetMoaSharp.3.0.0.13\lib\4.5\TweetSharp.dll</HintPath>
     </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\packages\NUnit.3.0.1\lib\net45\nunit.framework.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -51,6 +54,7 @@
     <Compile Include="ReplyBot.cs" />
     <Compile Include="User.cs" />
     <Compile Include="ListHelper.cs" />
+    <Compile Include="Test.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
