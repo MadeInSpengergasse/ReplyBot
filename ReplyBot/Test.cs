@@ -1,8 +1,7 @@
 ﻿using NUnit.Framework;
 using System;
-using ReplyBot;
 
-namespace MonoTests.ReplyBot
+namespace ReplyBot
 {
 	[TestFixture]
 	public class XMLHelperTest {
@@ -16,7 +15,7 @@ namespace MonoTests.ReplyBot
 		public void LoadTest(){
 			XMLHelper x = new XMLHelper ("test", "test");
 			x.Load ();
-			Assert.True ();
+			Assert.Pass ();
 		}
 
 
@@ -24,7 +23,7 @@ namespace MonoTests.ReplyBot
 		public void SaveTest(){
 			XMLHelper x = new XMLHelper ("test", "test");
 			x.Save ();
-			Assert.True ();
+			Assert.Pass ();
 		}
 
 	}
@@ -33,12 +32,12 @@ namespace MonoTests.ReplyBot
 
 		[Test]
 		public void SendTweetTestNull(){
-			Assert.Throws<Exception> (() => (TwitterHelper.SendTweet (null, null, null)));
+			Assert.Throws<Exception> (() => (TwitterHelper.SendTweet (null, null, 0)));
 		}
 
 		[Test]
 		public void GetUserTimelineNull(){
-			Assert.Throws<Exception> (() => (TwitterHelper.GetUserTimeline (null, null, null, null)));
+			Assert.Throws<Exception> (() => (TwitterHelper.GetUserTimeline (null, 0, false, false)));
 		}
 
 		[Test]
@@ -54,7 +53,7 @@ namespace MonoTests.ReplyBot
 		[Test]
 		public void MainTest (){
 			ReplyBot r = new ReplyBot ();
-			Assert.True;
+			Assert.Pass ();
 		}
 			
 	}
