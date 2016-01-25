@@ -3,12 +3,18 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReplyBot", "ReplyBot\ReplyBot.csproj", "{F2AEA1BF-EF1C-42B7-8A15-123F893A5D7D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReplyBotTest", "ReplyBotTest\ReplyBotTest.csproj", "{4A6D2F81-8356-468D-8299-5CE4A8E008AB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4A6D2F81-8356-468D-8299-5CE4A8E008AB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4A6D2F81-8356-468D-8299-5CE4A8E008AB}.Debug|x86.Build.0 = Debug|Any CPU
+		{4A6D2F81-8356-468D-8299-5CE4A8E008AB}.Release|x86.ActiveCfg = Release|Any CPU
+		{4A6D2F81-8356-468D-8299-5CE4A8E008AB}.Release|x86.Build.0 = Release|Any CPU
 		{F2AEA1BF-EF1C-42B7-8A15-123F893A5D7D}.Debug|x86.ActiveCfg = Debug|x86
 		{F2AEA1BF-EF1C-42B7-8A15-123F893A5D7D}.Debug|x86.Build.0 = Debug|x86
 		{F2AEA1BF-EF1C-42B7-8A15-123F893A5D7D}.Release|x86.ActiveCfg = Release|x86

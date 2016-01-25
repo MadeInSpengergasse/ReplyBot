@@ -10,7 +10,7 @@ using System.Threading;
 
 namespace ReplyBot
 {
-	class ReplyBot
+	public class ReplyBot
 	{
 		//reading in the lists for users, tweets and texts
 		UserList userList = new UserList(new XMLHelper ("users.xml", "default_users"));

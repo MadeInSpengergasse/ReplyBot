@@ -29,6 +29,9 @@ namespace ReplyBot
 			if (File.Exists (path)) {
 				return XElement.Load (path);
 			} else {
+				if (resname == null) {
+					throw new Exception ("resname is null.");
+				}
 				XElement xml = XElement.Load (System.Reflection.Assembly.GetExecutingAssembly ().GetManifestResourceStream (resname));
 				Save (xml);
 				Console.WriteLine("XML file doesnt exist, using the default! This message should not appear on a second start.");
