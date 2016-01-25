@@ -50,6 +50,7 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="test.xml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ReplyBot\ReplyBot.csproj">

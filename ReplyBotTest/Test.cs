@@ -19,25 +19,30 @@ namespace ReplyBotTest
 	[TestFixture]
 	public class XMLHelperTest {
 
+		string xmlpath = Environment.GetFolderPath (Environment.SpecialFolder.UserProfile) + "/.replybot/test.xml";
+
 		[Test]
-		public void MainTest() {
-			Assert.Throws<Exception>(()=>(new XMLHelper(null, null)));
+		public void NullTest() {
+			new XMLHelper(null, null);
 		}
 
 		[Test]
 		public void LoadTest(){
-			new XMLHelper ("test", null);
+			if (File.Exists (xmlpath)) {
+				File.Delete (xmlpath);
+			}
+			File.Copy ("../../test.xml", xmlpath);
+			new XMLHelper ("test.xml", null);
+			File.Delete (xmlpath);
 			Assert.Pass ();
 		}
 
-
 		[Test]
 		public void SaveTest(){
-			var xmlpath = Environment.GetFolderPath (Environment.SpecialFolder.UserProfile) + "/.replybot/test.xml";
-			XMLHelper x = new XMLHelper ("test", null);
-			x.Save ();
-			Assert.AreEqual (File.Exists (xmlpath), true);
+			new XMLHelper ("test.xml", null).Save(); //TODO: add default in xmlhelper
+			bool fileExists = File.Exists (xmlpath);
 			File.Delete (xmlpath);
+			Assert.AreEqual (fileExists, true);
 		}
 
 	}
