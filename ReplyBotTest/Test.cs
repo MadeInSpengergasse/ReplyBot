@@ -7,14 +7,6 @@ using System.Xml;
 
 namespace ReplyBotTest
 {
-	[TestFixture ()]
-	public class Test
-	{
-		[Test ()]
-		public void TestCase ()
-		{
-		}
-	}
 
 	[TestFixture]
 	public class XMLHelperTest {
@@ -55,14 +47,28 @@ namespace ReplyBotTest
 		}
 
 		[Test]
+		public void SendTweetTestInvalidID(){
+			Assert.Throws<Exception> (() => TwitterHelper.SendTweet (TweetSharp.TwitterService (), "Blabla", 123));
+
+		}
+
+		[Test]
 		public void GetUserTimelineNull(){
 			Assert.Throws<NullReferenceException> (() => (TwitterHelper.GetUserTimeline (null, 0, false, false)));
 		}
+
 
 		[Test]
 		public void GetUserIdFromUsernameNull(){
 			Assert.Throws<NullReferenceException> (() => (TwitterHelper.GetUserIdFromUsername (null, null)));
 		}
+
+		[Test]
+		public void GetUserIdFromUsernameInvalidName(){
+			Assert.Throws<NullReferenceException> (()=> TwitterHelper.GetUserIdFromUsername(TweetSharp.TwitterService(), "jgarigjjgaojgrljfjrigjbjoirjajkfbjioutreotrtobjbsnödjfle"));
+
+		}
+
 
 
 	}
