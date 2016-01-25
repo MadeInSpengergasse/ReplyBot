@@ -31,7 +31,7 @@ namespace ReplyBotTest
 
 		[Test]
 		public void SaveTest(){
-			new XMLHelper ("test.xml", null).Save(); //TODO: add default in xmlhelper
+			new XMLHelper ("test.xml", null).Save();
 			bool fileExists = File.Exists (xmlpath);
 			File.Delete (xmlpath);
 			Assert.AreEqual (fileExists, true);
@@ -68,13 +68,10 @@ namespace ReplyBotTest
 			Assert.Throws<NullReferenceException> (()=> TwitterHelper.GetUserIdFromUsername(null, "jgarigjjgaojgrljfjrigjbjoirjajkfbjioutreotrtobjbsnödjfle"));
 
 		}
-
-
-
 	}
+
 	[TestFixture]
 	public class ReplyBotTest {
-
 		[Test]
 		public void MainTest (){
 			new ReplyBot.ReplyBot ();
