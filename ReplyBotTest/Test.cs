@@ -48,7 +48,7 @@ namespace ReplyBotTest
 
 		[Test]
 		public void SendTweetTestInvalidID(){
-			Assert.Throws<Exception> (() => TwitterHelper.SendTweet (TweetSharp.TwitterService (), "Blabla", 123));
+			Assert.Throws<NullReferenceException> (() => TwitterHelper.SendTweet (null, "Blabla", 123));
 
 		}
 
@@ -65,7 +65,7 @@ namespace ReplyBotTest
 
 		[Test]
 		public void GetUserIdFromUsernameInvalidName(){
-			Assert.Throws<NullReferenceException> (()=> TwitterHelper.GetUserIdFromUsername(TweetSharp.TwitterService(), "jgarigjjgaojgrljfjrigjbjoirjajkfbjioutreotrtobjbsnödjfle"));
+			Assert.Throws<NullReferenceException> (()=> TwitterHelper.GetUserIdFromUsername(null, "jgarigjjgaojgrljfjrigjbjoirjajkfbjioutreotrtobjbsnödjfle"));
 
 		}
 
