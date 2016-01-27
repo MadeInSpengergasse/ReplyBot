@@ -9,17 +9,20 @@ namespace ReplyBotTest
 {
 
 	[TestFixture]
-	public class XMLHelperTest {
+	public class XMLHelperTest
+	{
 
 		string xmlpath = Environment.GetFolderPath (Environment.SpecialFolder.UserProfile) + "/.replybot/test.xml";
 
 		[Test]
-		public void NullTest() {
-			new XMLHelper(null, null);
+		public void NullTest ()
+		{
+			new XMLHelper (null, null);
 		}
 
 		[Test]
-		public void LoadTest(){
+		public void LoadTest ()
+		{
 			if (File.Exists (xmlpath)) {
 				File.Delete (xmlpath);
 			}
@@ -30,50 +33,60 @@ namespace ReplyBotTest
 		}
 
 		[Test]
-		public void SaveTest(){
-			new XMLHelper ("test.xml", null).Save();
+		public void SaveTest ()
+		{
+			new XMLHelper ("test.xml", null).Save ();
 			bool fileExists = File.Exists (xmlpath);
 			File.Delete (xmlpath);
 			Assert.AreEqual (fileExists, true);
 		}
 
 	}
+
 	[TestFixture]
-	public class TwitterHelperTest {
+	public class TwitterHelperTest
+	{
 
 		[Test]
-		public void SendTweetTestNull(){
+		public void SendTweetTestNull ()
+		{
 			Assert.Throws<NullReferenceException> (() => (TwitterHelper.SendTweet (null, null, 0)));
 		}
 
 		[Test]
-		public void SendTweetTestInvalidID(){
+		public void SendTweetTestInvalidID ()
+		{
 			Assert.Throws<NullReferenceException> (() => TwitterHelper.SendTweet (null, "Blabla", 123));
 
 		}
 
 		[Test]
-		public void GetUserTimelineNull(){
+		public void GetUserTimelineNull ()
+		{
 			Assert.Throws<NullReferenceException> (() => (TwitterHelper.GetUserTimeline (null, 0, false, false)));
 		}
 
 
 		[Test]
-		public void GetUserIdFromUsernameNull(){
+		public void GetUserIdFromUsernameNull ()
+		{
 			Assert.Throws<NullReferenceException> (() => (TwitterHelper.GetUserIdFromUsername (null, null)));
 		}
 
 		[Test]
-		public void GetUserIdFromUsernameInvalidName(){
-			Assert.Throws<NullReferenceException> (()=> TwitterHelper.GetUserIdFromUsername(null, "jgarigjjgaojgrljfjrigjbjoirjajkfbjioutreotrtobjbsnödjfle"));
+		public void GetUserIdFromUsernameInvalidName ()
+		{
+			Assert.Throws<NullReferenceException> (() => TwitterHelper.GetUserIdFromUsername (null, "jgarigjjgaojgrljfjrigjbjoirjajkfbjioutreotrtobjbsnödjfle"));
 
 		}
 	}
 
 	[TestFixture]
-	public class ReplyBotTest {
+	public class ReplyBotTest
+	{
 		[Test]
-		public void MainTest (){
+		public void MainTest ()
+		{
 			new ReplyBot.ReplyBot ();
 			Assert.Pass ();
 		}

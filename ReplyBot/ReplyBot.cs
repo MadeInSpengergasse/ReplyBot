@@ -13,12 +13,12 @@ namespace ReplyBot
 	public class ReplyBot
 	{
 		//reading in the lists for users, tweets and texts
-		UserList userList = new UserList(new XMLHelper ("users.xml", "default_users"));
-		TweetList tweetList = new TweetList(new XMLHelper ("tweets.xml", "default_tweets"));
-		TextLists textLists = new TextLists(new XMLHelper ("texts.xml", "default_texts"));
+		UserList userList = new UserList (new XMLHelper ("users.xml", "default_users"));
+		TweetList tweetList = new TweetList (new XMLHelper ("tweets.xml", "default_tweets"));
+		TextLists textLists = new TextLists (new XMLHelper ("texts.xml", "default_texts"));
 
 		TwitterService service;
-			
+
 		public ReplyBot ()
 		{
 			//connect to Twitter with login credentials
@@ -75,7 +75,8 @@ namespace ReplyBot
 			}
 		}
 
-		public static void AdministrationDialog(ReplyBot replybot) {
+		public static void AdministrationDialog (ReplyBot replybot)
+		{
 			while (true) {
 				Console.WriteLine (
 					"--- ADMINISTRATION ---" + "\n" +
@@ -103,7 +104,8 @@ namespace ReplyBot
 			}
 		}
 
-		public static void AdministrationUserDialog(ReplyBot replybot) {
+		public static void AdministrationUserDialog (ReplyBot replybot)
+		{
 			while (true) {
 				Console.WriteLine (
 					"--- USER ADMINISTRATION ---" + "\n" +
@@ -135,7 +137,8 @@ namespace ReplyBot
 			}
 		}
 
-		public static void AdministrationTextDialog(ReplyBot replybot) {
+		public static void AdministrationTextDialog (ReplyBot replybot)
+		{
 			while (true) {
 				Console.WriteLine (
 					"--- TEXT ADMINISTRATION ---" + "\n" +
@@ -176,17 +179,16 @@ namespace ReplyBot
 			if (userList.List.Count == 0) {
 				Console.WriteLine ("No user in database! Please add one first!");
 			}
-			foreach(var user in userList.List)
-			{
+			foreach (var user in userList.List) {
 				Console.WriteLine (user.UserId + " - " + user.Name);
 				var tweets = TwitterHelper.GetUserTimeline (service, user.UserId, false, true);
 				foreach (var tweet in tweets) {
-					if (!tweetList.List.Contains (tweet.Id.ToString())) {
+					if (!tweetList.List.Contains (tweet.Id.ToString ())) {
 						string tweetText = "@" + tweet.User.ScreenName + " " + textLists.getRandomString (user.Category) + " #ReplyBot (" + DateTime.Now.Ticks + ")";
 						if (!Debug) {
 							Console.WriteLine ("Sending tweet...");
 							TwitterHelper.SendTweet (service, tweetText, tweet.Id);
-							tweetList.List.Add (tweet.Id.ToString());
+							tweetList.List.Add (tweet.Id.ToString ());
 						} else {
 							Console.WriteLine ("Not sending tweet because in debug mode.");
 							Console.WriteLine (tweetText);
@@ -202,7 +204,7 @@ namespace ReplyBot
 		public void AddUserToDatabase ()
 		{
 
-			Console.WriteLine("Please enter the handle of the user you want to add.");
+			Console.WriteLine ("Please enter the handle of the user you want to add.");
 			Console.Write ("@");
 			string username = Console.ReadLine ();
 			TwitterUser user = TwitterHelper.GetUserIdFromUsername (service, username);
@@ -219,7 +221,7 @@ namespace ReplyBot
 
 			char pressedkey = Char.ToUpper (Console.ReadKey ().KeyChar);
 			byte mode;
-			if (Byte.TryParse (pressedkey.ToString(), out mode) == false) {
+			if (Byte.TryParse (pressedkey.ToString (), out mode) == false) {
 				Console.WriteLine ("Not a number, please try again!");
 				return;
 			}
@@ -229,12 +231,12 @@ namespace ReplyBot
 				Console.WriteLine ("Unknown mode, please try again!");
 				return;
 			}
-			userList.List.Add(new User(user.Id, (TextLists.TextCategory)mode, user.ScreenName));
+			userList.List.Add (new User (user.Id, (TextLists.TextCategory)mode, user.ScreenName));
 			Console.WriteLine ("Added user '" + user.ScreenName + "' with ID '" + user.Id + "' to the database!");
 			userList.Save ();
 		}
 
-		public void ViewUserDatabase()
+		public void ViewUserDatabase ()
 		{
 			Console.WriteLine ("Users in Database:");
 			if (userList.List.Count == 0) {
@@ -242,7 +244,7 @@ namespace ReplyBot
 				return;
 			}
 			foreach (User user in userList.List) {
-				Console.WriteLine("'" + user.Name + "' with ID '" + user.UserId + "' with category '" + user.Category + "'");
+				Console.WriteLine ("'" + user.Name + "' with ID '" + user.UserId + "' with category '" + user.Category + "'");
 			}
 			Console.WriteLine ("");
 		}
@@ -253,7 +255,7 @@ namespace ReplyBot
 			Console.Write ("@");
 			string wantedname = Console.ReadLine ();
 			long wantedId = TwitterHelper.GetUserIdFromUsername (service, wantedname).Id;
-			foreach(User user in userList.List) {
+			foreach (User user in userList.List) {
 				if (user.Name == wantedname || user.UserId == wantedId) {
 					userList.List.Remove (user);
 					Console.WriteLine ("User removed.");
@@ -264,7 +266,7 @@ namespace ReplyBot
 			Console.WriteLine ("No user called " + wantedname + " was found.");
 		}
 
-		public void AddTextToDatabase()
+		public void AddTextToDatabase ()
 		{
 			Console.WriteLine ("Please enter your text now.");
 			string text = Console.ReadLine ();
@@ -277,7 +279,7 @@ namespace ReplyBot
 			);
 			char pressedkey = Char.ToUpper (Console.ReadKey ().KeyChar);
 			byte mode;
-			if (Byte.TryParse (pressedkey.ToString(), out mode) == false) {
+			if (Byte.TryParse (pressedkey.ToString (), out mode) == false) {
 				Console.WriteLine ("Not a number, please try again!");
 				return;
 			}
@@ -299,7 +301,7 @@ namespace ReplyBot
 			textLists.Save ();
 		}
 
-		public void ViewTextDatabase()
+		public void ViewTextDatabase ()
 		{
 			Console.WriteLine ("Texts in Database:");
 			if (textLists.Hate.Count == 0 && textLists.Neutral.Count == 0 && textLists.Nice.Count == 0) {
@@ -308,20 +310,20 @@ namespace ReplyBot
 			}
 			Console.WriteLine ("\nCategory HATE:");
 			foreach (string text in textLists.Hate) {
-				Console.WriteLine("'" + text + "'");
+				Console.WriteLine ("'" + text + "'");
 			}
 			Console.WriteLine ("\nCategory NEUTRAL:");
 			foreach (string text in textLists.Neutral) {
-				Console.WriteLine("'" + text + "'");
+				Console.WriteLine ("'" + text + "'");
 			}
 			Console.WriteLine ("\nCategory NICE:");
 			foreach (string text in textLists.Nice) {
-				Console.WriteLine("'" + text + "'");
+				Console.WriteLine ("'" + text + "'");
 			}
 			Console.WriteLine ("");
 		}
 
-		public void DeleteTextFromDatabase()
+		public void DeleteTextFromDatabase ()
 		{
 			Console.WriteLine ("Please choose a category from which you want to delete a text");
 
@@ -333,7 +335,7 @@ namespace ReplyBot
 			);
 			char pressedkey = Char.ToUpper (Console.ReadKey ().KeyChar);
 			byte mode;
-			if (Byte.TryParse (pressedkey.ToString(), out mode) == false) {
+			if (Byte.TryParse (pressedkey.ToString (), out mode) == false) {
 				if (pressedkey == 'B') {
 					return;
 				}
@@ -356,13 +358,13 @@ namespace ReplyBot
 		}
 
 		//sub-menu for deleting a text
-		public void SubDeleteTexts(List<string> List) {
+		public void SubDeleteTexts (List<string> List)
+		{
 			var listEnumerator = List.GetEnumerator ();
 			Console.WriteLine ("================");
-			for (var i = 0; listEnumerator.MoveNext() == true; i++)
-			{
+			for (var i = 0; listEnumerator.MoveNext () == true; i++) {
 				string currentItem = listEnumerator.Current; // Get current item.
-				Console.WriteLine("[{0}] - {1}", i, currentItem); // Do as you wish with i and  currentItem
+				Console.WriteLine ("[{0}] - {1}", i, currentItem); // Do as you wish with i and  currentItem
 			}
 			Console.WriteLine ("================");
 			Console.WriteLine ("Please type the number of the text you want to delete.");
@@ -392,7 +394,7 @@ namespace ReplyBot
 		}
 
 		private static bool Debug {
-			get { return bool.Parse(ConfigurationManager.AppSettings ["Debug"]); }
+			get { return bool.Parse (ConfigurationManager.AppSettings ["Debug"]); }
 		}
 
 		//string[] u= users.

@@ -9,7 +9,8 @@ namespace ReplyBot
 	public class XMLHelper
 	{
 
-		public XElement xml {get;set;}
+		public XElement xml { get; set; }
+
 		private string path;
 		private string datapath;
 		private string resname;
@@ -21,13 +22,13 @@ namespace ReplyBot
 			}
 			this.resname = resname;
 
-			this.datapath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/.replybot"; // home directory (~) + special hidden directory
+			this.datapath = Environment.GetFolderPath (Environment.SpecialFolder.UserProfile) + "/.replybot"; // home directory (~) + special hidden directory
 			Directory.CreateDirectory (datapath);
-			this.path = datapath+"/"+filename;
+			this.path = datapath + "/" + filename;
 			this.xml = Load ();
 		}
 
-		public XElement Load()
+		public XElement Load ()
 		{
 			if (File.Exists (path)) {
 				return XElement.Load (path);
@@ -39,12 +40,12 @@ namespace ReplyBot
 					xml = XElement.Load (System.Reflection.Assembly.GetExecutingAssembly ().GetManifestResourceStream (resname));
 				}
 				Save (xml);
-				Console.WriteLine("XML file doesnt exist, using the default! This message should not appear on a second start.");
+				Console.WriteLine ("XML file doesnt exist, using the default! This message should not appear on a second start.");
 				return xml;
 			}
 		}
 
-		public void Save(XElement customxml=null)
+		public void Save (XElement customxml = null)
 		{
 			if (customxml != null) {
 				customxml.Save (path);
